@@ -1,0 +1,1 @@
+export const constant = 'webpack says heyd'
