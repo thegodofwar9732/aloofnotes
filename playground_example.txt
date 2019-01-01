@@ -1,0 +1,15 @@
+mutation makeMutation($input: NewPerson) {
+  makePerson(person: $input) {
+    firstName
+    lastName
+  }
+}
+
+
+QUERY VARIABLES
+{
+  "input":{
+    "firstName": "Muhtasim",
+    "lastName": "Chowdhury"
+  }
+}

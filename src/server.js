@@ -1,48 +1,23 @@
-const express = require('express')
-const {ApolloServer, gql} = require('apollo-server-express')
-const {makeExecutableSchema} = require('graphql-tools')
-const bodyParser = require('body-parser')
-import {constant} from './constant'
-import addressResolver from './addressResolver'
+import express from 'express'
+import {ApolloServer} from 'apollo-server-express'
+import {makeExecutableSchema} from 'graphql-tools'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import resolvers from './resolvers.js'
+import schema from './schema.js'
 const PORT = process.env.PORT || 5000
 
 const app = express()
 
-const schema = gql`
-  type Query {
-    hello: String
-    getPerson: Person
-  }
-  type Person {
-    firstName: String
-    lastName: String
-    address: String
-  }
-  schema {
-    query: Query
-  }
-`
-
-const resolvers = 
-{
-  Query : {
-    hello: () => 'hello broski',
-    getPerson: () => ({
-    firstName: 'Muhtasim', 
-    lastName: 'Chowdhury',
-    address: addressResolver
-    })
-  }
-}
-
 const apolloServer = new ApolloServer({
   typeDefs: schema,
-  resolvers
+  resolvers,
 })
-console.log(apolloServer.graphqlPath)
 
 apolloServer.applyMiddleware({app})
 
+mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
+  .then(response => console.log('Connected to db!'))
 
 app.listen(PORT, ()=> {
   console.log(`Server listening on port ${PORT}`)
