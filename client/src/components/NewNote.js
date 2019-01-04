@@ -9,7 +9,7 @@ export default class NewNote extends React.Component{
     // let user type into the box
     handleChange = (event)=> {
         this.setState({[event.target.name]: event.target.value})
-
+        // disable add note button if no text
         if (document.getElementById('text').value.length === 0) this.setState({disabled: true})
         else this.setState({disabled: false})
     }
@@ -28,8 +28,11 @@ export default class NewNote extends React.Component{
         const text = event.target[1].value
 
         // clear form
-        event.target[0].value = '' // cannot clear title, most likely bug with react or js itself, NOT my code
-        event.target[1].value = ''
+        // event.target[0].value = '' // cannot clear title, most likely bug with react or js itself, NOT my code
+        // event.target[1].value = ''
+        this.setState({title: '', text: ''})
+
+
         // disable button
         this.setState({disabled: true})
 
@@ -70,7 +73,7 @@ export default class NewNote extends React.Component{
                                 }
                                 <br/>
                                 <input id='text' className='addNoteInput' placeholder="Add a note" name='text'
-                                value={this.state.note} 
+                                value={this.state.text} 
                                 onChange={this.handleChange}/>
                                 <button id='addNoteButton' type='submit' disabled={this.state.disabled}>Add</button>
                             </form>

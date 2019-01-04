@@ -9,6 +9,7 @@
   "scripts": {
     "start": "webpack && node bundle.js",
     "build": "webpack",
+    "build-client": "npm run build --prefix ./client",
     "now": "node bundle.js",
     "dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"",
     "client": "npm run start --prefix ./client",
