@@ -12,7 +12,7 @@ class App extends Component {
     super(props)
     this.state = {displayTitleInputBox: false}
     let myUri = 'http://localhost:5000/graphql'
-    if (process.env.NODE === 'production') myUri = '/graphql'
+    if (process.env.NODE_ENV === 'production') myUri = '/graphql'
     this.client = new ApolloClient({uri:myUri})
     // TODO: change uri when you are deploying
   }
