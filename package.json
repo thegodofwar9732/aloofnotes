@@ -7,7 +7,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node bundle.js",
+    "start": "webpack && node bundle.js",
     "build": "webpack",
     "now": "node bundle.js",
     "dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"",
