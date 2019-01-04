@@ -5,9 +5,10 @@ const schema = gql`
     getAllNotes: [Note]!
   }
   type Note {
+    id: String!
     title: String
     text: String!
-    created: String!
+    created: Float!
   }
   type Mutation {
     addNote(input: NewNote): Note

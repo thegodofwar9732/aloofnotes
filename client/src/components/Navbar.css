@@ -1,0 +1,15 @@
+.nav {
+    background: #1d7baa;
+    border-radius: 10px;
+    margin-left:100px;
+    margin-right: 100px;
+    height: 50px;
+    display:flex;
+    align-items: center;
+}
+#home {
+    margin-left: 1%;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 26px;
+}

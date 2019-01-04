@@ -1,0 +1,27 @@
+#addNoteContainer{
+    margin:2%;
+    /* background: red; */
+}
+#addNoteForm {
+    /* background: #b3d5e6; */
+    margin:0 auto;
+    width:50%;
+    text-align: center;
+}
+.addNoteInput {
+    border:none;
+    width:98%;
+    height: 20px;
+    border-radius: 10px;
+    padding: 2%;
+    margin:1%;
+    font-size: 20px;
+}
+#addNoteButton {
+    background: #e4f5fd;
+    border-radius: 10px;
+    border: none;
+    padding: 2%;
+    width: 10%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}

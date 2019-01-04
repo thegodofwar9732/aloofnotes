@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const noteSchema = new mongoose.Schema({
     title: String,
     text: String,
-    created: String
+    created: Number
 })
 
 const noteModel = mongoose.model('note', noteSchema)
