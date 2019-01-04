@@ -28,10 +28,7 @@ export default class NewNote extends React.Component{
         const text = event.target[1].value
 
         // clear form
-        // event.target[0].value = '' // cannot clear title, most likely bug with react or js itself, NOT my code
-        // event.target[1].value = ''
         this.setState({title: '', text: ''})
-
 
         // disable button
         this.setState({disabled: true})
