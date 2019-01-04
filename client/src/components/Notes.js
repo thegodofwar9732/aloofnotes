@@ -8,7 +8,6 @@ export default class Notes extends React.Component{
     // by the way, this query will execute upon every rerender
     // make sure theres not too mant rerenders
     createNotes = ({allNotes})=> {
-        console.log('allNotes in notes.js', allNotes)
         return (
             <div id='allNotesContainer'>
                 {

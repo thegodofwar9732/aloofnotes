@@ -23,7 +23,6 @@ export default class NewNote extends React.Component{
     }
 
     handleAddNote = (mutate, event)=> {
-        console.log('handleAddNote')
         event.preventDefault()
         const title = event.target[0].value
         const text = event.target[1].value
@@ -51,10 +50,7 @@ export default class NewNote extends React.Component{
         return (
             <Mutation mutation={addNoteMutation}
             update={(cache, result)=> {
-                console.log('update')
-                console.log('result in update', result)
                 let {allNotes} = cache.readQuery({query: getAllNotesQuery })
-                console.log('allNotes', allNotes)
                 cache.writeQuery({
                     query: getAllNotesQuery,
                     data: {allNotes: allNotes.concat([result.data.addNote])}
@@ -63,7 +59,6 @@ export default class NewNote extends React.Component{
             >
             {
                 (mutate, result) => {
-                    console.log('result in renderProp', result)
                     return (
                         <div id='addNoteContainer'>
                             <form id='addNoteForm' onSubmit={this.handleAddNote.bind(this, mutate)} onClick={this.handleClick}>
@@ -83,10 +78,6 @@ export default class NewNote extends React.Component{
                     )
                 }
             }
-
-
-
-
             </Mutation>
         )
     }
