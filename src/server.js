@@ -24,16 +24,20 @@ apolloServer.applyMiddleware({app})
 mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
 .then(response => console.log('Connected to db!'))
 
+app.use(express.static('public'))
 app.get('/drop', (req, res) => {
-  noteModel.collection.drop()
-  res.send('Note collection has been dropped!')
+  // noteModel.collection.drop()
+  // res.send('Note collection has been dropped!')
+  // res.send('hey')
+  console.log('__dirname', __dirname)
+    res.send(path.resolve(__dirname, 'public', 'index.html'))
 })
 app.use(cors)
 
-app.get('*', (req, res)=> {
-  res.send(path.resolve(__dirname, 'client/build/index.html'))
-})
-app.use(express.static('client/build'))
+// app.get('/ok', (req, res)=> {
+//   console.log('send file')
+//   res.send('ok')
+// })
 
 app.listen(PORT, ()=> {
   console.log(`Server listening on port ${PORT}`)
