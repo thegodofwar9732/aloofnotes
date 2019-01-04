@@ -29,8 +29,8 @@ app.get('/drop', (req, res) => {
   // noteModel.collection.drop()
   // res.send('Note collection has been dropped!')
   // res.send('hey')
-  console.log('__dirname', __dirname)
-    res.send(path.resolve(__dirname, 'public', 'index.html'))
+  // console.log('__dirname', __dirname)
+  //   res.send(path.resolve(__dirname, 'public', 'index.html'))
 })
 app.use(cors)
 
