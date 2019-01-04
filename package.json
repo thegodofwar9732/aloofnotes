@@ -7,10 +7,10 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "webpack && node dist/bundle.js",
+    "start": "webpack && node bundle.js",
     "build": "webpack",
-    "now": "node dist/bundle.js",
-    "dev": "concurrently \"webpack --watch\" \"nodemon dist/bundle.js\"",
+    "now": "node bundle.js",
+    "dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"",
     "client": "npm run start --prefix ./client",
     "both": "concurrently \"npm run now\"  \"npm run start --prefix ./client\" "
   },
