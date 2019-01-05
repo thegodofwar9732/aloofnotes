@@ -6,6 +6,7 @@
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs",
   "scripts": {
-    "postdeploy": "echo hello"
+    "prepublish": "echo hello",
+    "preinstall": "ls"
   }
 }
