@@ -1,22 +1,21 @@
-playground is on /graphql
+How to switch to production?
+Do the following commands in the root project folder:
+export NODE_ENV=production
+npm run build
 
-## Deploying to Heroku
+How to switch to development?
+Do the following commands in the root project folder:
+export NODE_ENV=development
+npm run build
 
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+How are __dirname and __filename handled by webpack?
+If the following options are not set to true or false, __dirname may default to ~
+If false, __dirname does not change, so its still the directory of the original file
+If true, __dirname will be the directory of the bundled file
 
-## Documentation
+node: {
+        __dirname: false,
+        __filename: false,
+    },
 
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)

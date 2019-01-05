@@ -1,8 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import {ApolloServer} from 'apollo-server-express'
-import {makeExecutableSchema} from 'graphql-tools'
-import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import resolvers from './resolvers.js'
 import schema from './schema.js'
@@ -20,37 +18,27 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({app})
 
 
-
-mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
-.then(response => console.log('Connected to db!'))
-
-app.use(express.static('public'))
-
-app.get('/hi', (req, res) => {
-  console.log('hi')
-  // noteModel.collection.drop()
-  // res.send('Note collection has been dropped!')
-  // res.send('hey')
-  // console.log('__dirname', __dirname)
-  res.send('hi')
+app.get('/drop', (req, res) => {
+  noteModel.collection.drop()
+  res.send('Note collection has been dropped!')
 })
 
+if(process.env.NODE_ENV === 'production')
+  // must come before catch all or else it won't work
+  app.use(express.static('public')) 
+
+// the catch all
 app.get('*', (req, res) => {
-  console.log('any route')
-  // noteModel.collection.drop()
-  // res.send('Note collection has been dropped!')
-  // res.send('hey')
-  // console.log('__dirname', __dirname)
-  res.send(path.resolve(__dirname, 'public', 'index.html'))
+  console.log('process', process.env.NODE_ENV)
+  if(process.env.NODE_ENV === 'production')
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+  else res.send('This is the backend server on development')
 })
-
 
 app.use(cors)
 
-// app.get('/ok', (req, res)=> {
-//   console.log('send file')
-//   res.send('ok')
-// })
+mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
+.then(response => console.log('Connected to db!'))
 
 app.listen(PORT, ()=> {
   console.log(`Server listening on port ${PORT}`)
