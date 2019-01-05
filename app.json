@@ -6,7 +6,7 @@
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs",
   "scripts": {
-    "prepublish": "echo hello",
+    "prepublish": "npx webpack",
     "preinstall": "ls"
   }
 }
