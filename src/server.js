@@ -20,7 +20,7 @@ apolloServer.applyMiddleware({app})
 
 app.get('/drop', (req, res) => {
   noteModel.collection.drop()
-  res.send('Note collection has been dropped!')
+  res.send('Note collection has been dropped!<br/><a href="/">Home</a>')
 })
 
 if(process.env.NODE_ENV === 'production')
