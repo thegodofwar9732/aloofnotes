@@ -29,7 +29,6 @@ if(process.env.NODE_ENV === 'production')
 
 // the catch all
 app.get('*', (req, res) => {
-  console.log('process', process.env.NODE_ENV)
   if(process.env.NODE_ENV === 'production')
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
   else res.send('This is the backend server on development')
@@ -42,4 +41,5 @@ mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewU
 
 app.listen(PORT, ()=> {
   console.log(`Server listening on port ${PORT}`)
+  console.log('environment', process.env.NODE_ENV)
 })
