@@ -24,8 +24,9 @@ apolloServer.applyMiddleware({app})
 mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
 .then(response => console.log('Connected to db!'))
 
-// app.use(express.static('public'))
+app.use(express.static('public'))
 app.get('/drop', (req, res) => {
+  console.log('drop')
   // noteModel.collection.drop()
   // res.send('Note collection has been dropped!')
   // res.send('hey')
