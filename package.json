@@ -13,7 +13,8 @@
     "now": "node bundle.js",
     "dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"",
     "client": "npm run start --prefix ./client",
-    "both": "concurrently \"npm run now\"  \"npm run start --prefix ./client\" "
+    "both": "concurrently \"npm run now\"  \"npm run start --prefix ./client\" ",
+    "heroku-postbuild": "webpack -p" 
   },
   "dependencies": {
     "apollo-boost": "^0.1.23",
