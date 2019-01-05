@@ -25,14 +25,26 @@ mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewU
 .then(response => console.log('Connected to db!'))
 
 app.use(express.static('public'))
-app.get('/drop', (req, res) => {
-  console.log('drop')
+
+app.get('/hi', (req, res) => {
+  console.log('hi')
+  // noteModel.collection.drop()
+  // res.send('Note collection has been dropped!')
+  // res.send('hey')
+  // console.log('__dirname', __dirname)
+  res.send('hi')
+})
+
+app.get('*', (req, res) => {
+  console.log('any route')
   // noteModel.collection.drop()
   // res.send('Note collection has been dropped!')
   // res.send('hey')
   // console.log('__dirname', __dirname)
   res.send(path.resolve(__dirname, 'public', 'index.html'))
 })
+
+
 app.use(cors)
 
 // app.get('/ok', (req, res)=> {
