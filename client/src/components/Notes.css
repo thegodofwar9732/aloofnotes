@@ -1,6 +1,14 @@
 #allNotesContainer{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
+    /* grid-template-columns: 50% 50%; */
+}
+@media only screen and (max-width: 1080px) {
+    #allNotesContainer{
+        display: grid;
+        /* grid-template-columns: 25% 25% 25% 25%; */
+        grid-template-columns: 50% 50%;
+    }
 }
 #noteBox{
     background: #aaccdd;
@@ -18,6 +26,18 @@
     display: block;
     text-align: center;
 }
+@media only screen and (max-width: 1080px) {
+    #noteTitle {
+        font-size: 30px;
+
+    }
+}
 #noteText{
     display:block;
+}
+@media only screen and (max-width: 1080px) {
+    #noteText {
+        font-size: 28px;
+
+    }
 }
