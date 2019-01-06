@@ -44,18 +44,20 @@ export default class NewNote extends React.Component{
                 }
             }
         )
-}
+    }
+
+    update = (cache, result)=> {
+        let {allNotes} = cache.readQuery({query: getAllNotesQuery })
+        cache.writeQuery({
+            query: getAllNotesQuery,
+            data: {allNotes: allNotes.concat([result.data.addNote])}
+        })
+    }
 
     render() {
         return (
             <Mutation mutation={addNoteMutation}
-            update={(cache, result)=> {
-                let {allNotes} = cache.readQuery({query: getAllNotesQuery })
-                cache.writeQuery({
-                    query: getAllNotesQuery,
-                    data: {allNotes: allNotes.concat([result.data.addNote])}
-                })
-            }}
+            update={this.update}
             >
             {
                 (mutate, result) => {
