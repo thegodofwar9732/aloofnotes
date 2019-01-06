@@ -1,12 +1,14 @@
-#addNoteContainer{
-    margin:2%;
-    /* background: red; */
-}
-#addNoteForm {
-    /* background: #b3d5e6; */
-    margin:0 auto;
-    width:50%;
-    text-align: center;
+#addNoteContainer {
+    /* background: lightcoral; */
+    margin-right:auto;
+    margin-left: auto;
+    margin-top: 2%;
+    width:40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 8em;
 }
 @media only screen and (max-width: 1080px) {
     #addNoteForm {
@@ -14,13 +16,18 @@
     } 
 }
 .addNoteInput {
+    /* background: rgb(221, 245, 253); */
     border:none;
-    width:98%;
-    height: 20px;
+    width:100%;
+    min-height: 35px;
     border-radius: 10px;
-    padding: 2%;
-    margin:1%;
+    padding: 1%;
+    margin-bottom: 1em;
     font-size: 20px;
+}
+.addNoteInput:empty:before {
+    content:attr(data-placeholder);
+    color: lightgray
 }
 @media only screen and (max-width: 1080px) {
     .addNoteInput {
@@ -32,8 +39,9 @@
     background: #e4f5fd;
     border-radius: 10px;
     border: none;
-    padding: 2%;
-    width: 50px;
+    padding: 1em;
+    /* width: 50px; */
+    /* height: 40px; */
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 @media only screen and (max-width: 1080px) {

@@ -24,9 +24,12 @@ class App extends Component {
   turnOffTitleBox = () => {
     // retriving a state variable from the child component 'NewNote'
     const noteTitle = this.newNoteChildComponent.state.title
+    const noteText = this.newNoteChildComponent.state.text
 
+    console.log('title', noteTitle)
+    console.log('text', noteText)
     // don't hide title box if there is text in it
-    if(this.state.displayTitleInputBox && noteTitle.length === 0)
+    if(this.state.displayTitleInputBox && noteTitle.length === 0 && noteText.length === 0)
       this.setState({displayTitleInputBox: false})
   }
 
