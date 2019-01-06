@@ -61,7 +61,7 @@ export default class NewNote extends React.Component{
                 (mutate, result) => {
                     return (
                         <div id='addNoteContainer'>
-                            <form id='addNoteForm' onSubmit={this.handleAddNote.bind(this, mutate)} onClick={this.handleClick}>
+                            <form id='addNoteForm' onSubmit={this.handleAddNote.bind(this, mutate)} onClick={this.handleClick} autoComplete='off'>
                                 {
                                     this.props.displayTitleInputBox ? 
                                     <input className='addNoteInput' placeholder="Add title" name='title'

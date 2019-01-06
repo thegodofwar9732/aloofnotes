@@ -10,25 +10,20 @@ export default class Notes extends React.Component{
     createNotes = ({allNotes})=> {
         return (
             <div id='allNotesContainer'>
-                {
-                    // TODO: remove suppressContentEditableWarning={true} ??
-                    allNotes.map(
-                        note => {
-                            return (
-                                <div id='noteBox' key={note.id}>
-                                    <span contentEditable id='noteTitle' suppressContentEditableWarning={true}>{note.title}</span>
-                                    <br/>
-                                    <span contentEditable id='noteText' suppressContentEditableWarning={true}>{note.text}</span>
-                                </div>
-                            )
-                        }
-                    )
-                }
+                {allNotes.map(this.createNote)}
+            </div>
+        )   
+    }
+    
+    createNote = note => {
+        // TODO: remove suppressContentEditableWarning={true} ??
+        return (
+            <div id='noteBox' key={note.id}>
+                <span contentEditable id='noteTitle' suppressContentEditableWarning={true}>{note.title}</span>
+                <br/>
+                <span contentEditable id='noteText' suppressContentEditableWarning={true}>{note.text}</span>
             </div>
         )
-        
-        
-        
     }
 
     render() {
