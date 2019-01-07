@@ -66,10 +66,25 @@ export default class NewNote extends React.Component{
         })
     }
 
+    // to prevent line breaks in title box
+    preventLineBreak = (e)=> {
+        // console.log('e', e)
+        // console.log('e.keyCode', e.keyCode)
+
+        // prevent 'enter' key from creating line break in title box
+        if (e.keyCode === 13) 
+            e.preventDefault()
+
+        // instead have to go to text box to simulate a tab press
+        document.querySelector('#text').focus()
+    }
+
     createTitleBox = () => {
         return this.props.displayTitleInputBox ? 
         <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true}
-        contentEditable data-placeholder='Add a title' onInput={this.handleChange}>
+        contentEditable data-placeholder='Add a title' 
+        onInput={this.handleChange}
+        onKeyDown={this.preventLineBreak}>
         {/* should be empty otherwise it reverses the text direction */}
         </div> : null
     }
