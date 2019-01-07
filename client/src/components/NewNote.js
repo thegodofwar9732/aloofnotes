@@ -72,11 +72,11 @@ export default class NewNote extends React.Component{
         // console.log('e.keyCode', e.keyCode)
 
         // prevent 'enter' key from creating line break in title box
-        if (e.keyCode === 13) 
+        if (e.keyCode === 13) {
             e.preventDefault()
-
-        // instead have to go to text box to simulate a tab press
-        document.querySelector('#text').focus()
+            // instead have it to go to text box to simulate a tab press
+            document.querySelector('#text').focus()
+        }
     }
 
     createTitleBox = () => {
