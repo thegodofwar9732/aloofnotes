@@ -17,11 +17,12 @@ export default class Notes extends React.Component{
     
     createNote = note => {
         // TODO: remove suppressContentEditableWarning={true} ??
+        note.text = note.text.replace(/\n/g, '<br/>');
         return (
             <div id='noteBox' key={note.id}>
                 <span contentEditable id='noteTitle' suppressContentEditableWarning={true}>{note.title}</span>
                 <br/>
-                <span contentEditable id='noteText' suppressContentEditableWarning={true}>{note.text}</span>
+                <span contentEditable id='noteText' suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: note.text}}></span>
             </div>
         )
     }

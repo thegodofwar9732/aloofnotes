@@ -28,11 +28,19 @@ export default class NewNote extends React.Component{
         event.preventDefault()
 
         const title = document.getElementById('title').innerHTML
-        const text = document.getElementById('text').innerHTML
-
+        let text = document.getElementById('text').innerHTML
+        
+        text = text.replace(/<div>/gi, '\n');
+        text = text.replace(/<\/div>/gi, '');
+         
         // clear form
         this.setState({title: '', text: ''})
-
+        
+        // state and div innerHTML are no longer linked so need to manually clear each
+        // linking them makes typing the text go the wrong way
+        document.getElementById('title').innerHTML = ''
+        document.getElementById('text').innerHTML = ''
+        
         // disable button
         this.setState({disabled: true})
 
@@ -60,7 +68,7 @@ export default class NewNote extends React.Component{
 
     createTitleBox = () => {
         return this.props.displayTitleInputBox ? 
-        <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true} 
+        <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true}
         contentEditable data-placeholder='Add a title' onInput={this.handleChange}>
         {/* should be empty otherwise it reverses the text direction */}
         </div> : null
