@@ -11,7 +11,7 @@
     min-height: 8em;
 }
 @media only screen and (max-width: 1080px) {
-    #addNoteForm {
+    #addNoteContainer {
         width:80%;
     } 
 }
@@ -25,14 +25,15 @@
     margin-bottom: 1em;
     font-size: 20px;
 }
+/* to simulate placeholder attribute for a div */
 .addNoteInput:empty:before {
     content:attr(data-placeholder);
     color: lightgray
 }
 @media only screen and (max-width: 1080px) {
     .addNoteInput {
-        height: 40px;
-        font-size: 24px;
+        /* height: 40px; */
+        /* font-size: 24px; */
     }
 }
 #addNoteButton {
@@ -46,7 +47,7 @@
 }
 @media only screen and (max-width: 1080px) {
     #addNoteButton {
-        width: 90px;
-        font-size: 26px;
+        /* width: 90px; */
+        /* font-size: 26px; */
     }
 }
