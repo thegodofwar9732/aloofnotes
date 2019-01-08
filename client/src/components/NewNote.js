@@ -32,6 +32,7 @@ export default class NewNote extends React.Component{
         
         text = text.replace(/<div>/gi, '\n');
         text = text.replace(/<\/div>/gi, '');
+        text = text.replace(/<br>/gi, '');
          
         // clear form
         this.setState({title: '', text: ''})
