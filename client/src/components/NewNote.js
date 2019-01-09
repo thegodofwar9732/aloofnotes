@@ -8,9 +8,11 @@ export default class NewNote extends React.Component{
     
     // let user type into the box
     handleChange = (event)=> {
-        this.setState({[event.target.name]: event.target.value})
+        let titleOrText = event.target.getAttribute('name')
+
+        this.setState({[titleOrText]: event.target.innerHTML})
         // disable add note button if no text
-        if (document.getElementById('text').value.length === 0) this.setState({disabled: true})
+        if (document.getElementById('text').innerHTML.length === 0) this.setState({disabled: true})
         else this.setState({disabled: false})
     }
     
@@ -24,12 +26,22 @@ export default class NewNote extends React.Component{
 
     handleAddNote = (mutate, event)=> {
         event.preventDefault()
-        const title = event.target[0].value
-        const text = event.target[1].value
 
+        const title = document.getElementById('title').innerHTML
+        let text = document.getElementById('text').innerHTML
+        
+        text = text.replace(/<div>/gi, '\n');
+        text = text.replace(/<\/div>/gi, '');
+        text = text.replace(/<br>/gi, '');
+         
         // clear form
         this.setState({title: '', text: ''})
-
+        
+        // state and div innerHTML are no longer linked so need to manually clear each
+        // linking them makes typing the text go the wrong way
+        document.getElementById('title').innerHTML = ''
+        document.getElementById('text').innerHTML = ''
+        
         // disable button
         this.setState({disabled: true})
 
@@ -46,6 +58,7 @@ export default class NewNote extends React.Component{
         )
     }
 
+    // update apollo cache when user adds note to reflect changes immediately on UI
     update = (cache, result)=> {
         let {allNotes} = cache.readQuery({query: getAllNotesQuery })
         cache.writeQuery({
@@ -54,28 +67,51 @@ export default class NewNote extends React.Component{
         })
     }
 
+    // to prevent line breaks in title box
+    preventLineBreak = (e)=> {
+        // console.log('e', e)
+        // console.log('e.keyCode', e.keyCode)
+
+        // prevent 'enter' key from creating line break in title box
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            // instead have it to go to text box to simulate a tab press
+            document.querySelector('#text').focus()
+        }
+    }
+
+    createTitleBox = () => {
+        return this.props.displayTitleInputBox ? 
+        <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true}
+        contentEditable data-placeholder='Add a title' 
+        onInput={this.handleChange}
+        onKeyDown={this.preventLineBreak}>
+        {/* should be empty otherwise it reverses the text direction */}
+        </div> : null
+    }
+
+    createTextBox = () => {
+        return (
+            <div id='text' className='addNoteInput' name='text' contentEditable
+                suppressContentEditableWarning={true} data-placeholder='Add a note'
+                onInput={this.handleChange}>{/* should be empty otherwise it reverses text direction */}
+            </div>
+        )
+    }
+
     render() {
         return (
             <Mutation mutation={addNoteMutation}
-            update={this.update}
-            >
+                update={this.update}>
             {
                 (mutate, result) => {
                     return (
-                        <div id='addNoteContainer'>
-                            <form id='addNoteForm' onSubmit={this.handleAddNote.bind(this, mutate)} onClick={this.handleClick} autoComplete='off'>
-                                {
-                                    this.props.displayTitleInputBox ? 
-                                    <input className='addNoteInput' placeholder="Add title" name='title'
-                                    value={this.state.title}
-                                    onChange={this.handleChange}/> : null
-                                }
-                                <br/>
-                                <input id='text' className='addNoteInput' placeholder="Add a note" name='text'
-                                value={this.state.text} 
-                                onChange={this.handleChange}/>
-                                <button id='addNoteButton' type='submit' disabled={this.state.disabled}>Add</button>
-                            </form>
+                        <div id='addNoteContainer' onClick={this.handleClick} autoComplete='off'>
+                            {this.createTitleBox()}
+                            {this.createTextBox()}
+                            <button id='addNoteButton' type='submit' disabled={this.state.disabled}
+                            onClick={this.handleAddNote.bind(this, mutate)}
+                            >Add</button>
                         </div>
                     )
                 }
