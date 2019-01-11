@@ -83,7 +83,7 @@ export default class NewNote extends React.Component{
     createTitleBox = () => {
         return this.props.displayTitleInputBox ? 
         <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true}
-        contentEditable data-placeholder='Add a title' 
+        contentEditable data-placeholder='Add a title...' 
         onInput={this.handleChange}
         onKeyDown={this.preventLineBreak}>
         {/* should be empty otherwise it reverses the text direction */}
@@ -93,7 +93,7 @@ export default class NewNote extends React.Component{
     createTextBox = () => {
         return (
             <div id='text' className='addNoteInput' name='text' contentEditable
-                suppressContentEditableWarning={true} data-placeholder='Add a note'
+                suppressContentEditableWarning={true} data-placeholder='Add a note...'
                 onInput={this.handleChange}>{/* should be empty otherwise it reverses text direction */}
             </div>
         )
