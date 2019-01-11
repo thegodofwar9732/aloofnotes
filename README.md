@@ -19,3 +19,5 @@ node: {
         __filename: false,
     },
 
+Remaining Bugs to take care of:
+&nbsp can be entered in title box after some spaces
