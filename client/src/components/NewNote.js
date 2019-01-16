@@ -24,6 +24,7 @@ export default class NewNote extends React.Component{
             this.props.turnOnTitleBox()
     }
 
+    // send graphql mutation
     handleAddNote = (mutate, event)=> {
         event.preventDefault()
 

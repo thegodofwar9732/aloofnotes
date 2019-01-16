@@ -20,3 +20,12 @@ export const addNoteMutation = gql`
         }
     }
 `
+export const editNoteMutation = gql`
+    mutation edit($input:EditNote) {
+        editNote(input:$input) {
+        id
+        title
+        text
+        }
+    }
+`

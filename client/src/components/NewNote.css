@@ -1,5 +1,5 @@
 #addNoteContainer {
-    /* background: #6ed3cf; */
+    background: #fff;
     border: solid 1px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
     margin-right:auto;
@@ -18,7 +18,7 @@
     } 
 }
 .addNoteInput {
-    /* background: rgb(221, 245, 253); */
+    background: #fff;
     border:none;
     width:96%;
     min-height: 35px;
@@ -48,13 +48,17 @@
     border: none;
     padding: 0.4em 0.7em 0.4em 0.7em;
     margin-bottom: 0.5em;
+    color: black;
     
     /* width: 50px; */
     /* height: 40px; */
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
+    border: solid 1px transparent;
 }
-#addNoteButton:hover {background: #b7e2e1;}
+#addNoteButton:hover {
+    border: solid 1px black;
+}
 @media only screen and (max-width: 1080px) {
     #addNoteButton {
         /* width: 90px; */
