@@ -57,6 +57,7 @@ export default class NewNote extends React.Component{
                 }
             }
         )
+        // close title box
     }
 
     // update apollo cache when user adds note to reflect changes immediately on UI
