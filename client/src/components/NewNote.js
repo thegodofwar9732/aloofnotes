@@ -35,8 +35,8 @@ export default class NewNote extends React.Component{
         text = text.replace(/<\/div>/gi, '');
         text = text.replace(/<br>/gi, '');
          
-        // clear form
-        this.setState({title: '', text: ''})
+        // clear form and hide title box
+        this.setState({title: '', text: ''}, ()=> this.props.turnOffTitleBox())
         
         // state and div innerHTML are no longer linked so need to manually clear each
         // linking them makes typing the text go the wrong way
