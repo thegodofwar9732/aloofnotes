@@ -21,23 +21,21 @@ class App extends Component {
   turnOnTitleBox = () => this.setState({displayTitleInputBox: true})
   
   turnOffTitleBox = () => {
-    console.log('turnOffTitleBox')
-    // TODO: title box does not turn off when u add a note, fix this
 
+    this.setState(prevState => {
+      // if title box is already off, do nothing
+      if (!prevState.displayTitleInputBox) return
 
-    // retriving a state variable from the child component 'NewNote'
-    const noteTitle = this.newNoteChildComponent.state.title
-		console.log("​App -> turnOffTitleBox -> noteTitle", noteTitle)
-    
-    const noteText = this.newNoteChildComponent.state.text
-		console.log("​App -> turnOffTitleBox -> noteText", noteText)
-    
+      // retriving a state variable from the child component 'NewNote'
+      const noteTitle = this.newNoteChildComponent.state.title  
+      const noteText = this.newNoteChildComponent.state.text
 
-    // don't hide title box if there is text in it
-    if(this.state.displayTitleInputBox && noteTitle.length === 0 && noteText.length === 0)
-      this.setState({displayTitleInputBox: false})
+      // don't hide title box if there is text in it
+      if (noteTitle.length === 0 && noteText.length === 0)
+        return {displayTitleInputBox: false}
+
+    })
   }
-
 
   render() {
     return (

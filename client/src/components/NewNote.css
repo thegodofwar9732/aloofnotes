@@ -41,6 +41,8 @@
         /* font-size: 24px; */
     }
 }
+/* for divs created when u skip a line*/
+.addNoteInput div {background: inherit;}
 #addNoteButton {
     /* background: #6ed3cf; */
     background: #fff;
