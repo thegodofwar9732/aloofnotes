@@ -10,7 +10,8 @@
 #noteTitle{
     font-size: 22px;
     font-family: Helvetica, sans-serif;
-    align-self: center;
+    /* align-self: center; <- this gives a smaller editing space*/
+    text-align: center;
     background: #fff;
 }
 @media only screen and (max-width: 1080px) {
