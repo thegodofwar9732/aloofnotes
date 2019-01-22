@@ -111,9 +111,11 @@ export default class NewNote extends React.Component{
                         <div id='addNoteContainer' onClick={this.handleClick} autoComplete='off'>
                             {this.createTitleBox()}
                             {this.createTextBox()}
-                            <button id='addNoteButton' type='submit' disabled={this.state.disabled}
-                            onClick={this.handleAddNote.bind(this, mutate)}
-                            >Add</button>
+                            {
+                                this.props.displayTitleInputBox ?
+                                <button id='addNoteButton' type='submit' disabled={this.state.disabled}
+                                onClick={this.handleAddNote.bind(this, mutate)}>Add</button> : null
+                            }
                         </div>
                     )
                 }
