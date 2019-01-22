@@ -6,15 +6,15 @@
     margin-right:auto;
     margin-left: auto;
     margin-top: 2em;
-    width:40%;
+    width:97%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
-@media only screen and (max-width: 1080px) {
+@media only screen and (min-width: 1080px) {
     #addNoteContainer {
-        width:90%;
+        width:40%;
     } 
 }
 .addNoteInput {
