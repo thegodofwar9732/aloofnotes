@@ -1,7 +1,7 @@
 import React from 'react'
 import {Mutation} from 'react-apollo'
 import {addNoteMutation, getAllNotesQuery} from '../queries/index'
-import './NewNote.css'
+import styled from 'styled-components'
 
 export default class NewNote extends React.Component{
     state = {title: "", text:"", disabled:true}
@@ -84,20 +84,20 @@ export default class NewNote extends React.Component{
 
     createTitleBox = () => {
         return this.props.displayTitleInputBox ? 
-        <div id='title' className='addNoteInput' name='title' suppressContentEditableWarning={true}
+        <AddNoteInput id='title' name='title' suppressContentEditableWarning={true}
         contentEditable data-placeholder='Add a title...' 
         onInput={this.handleChange}
         onKeyDown={this.preventLineBreak}>
         {/* should be empty otherwise it reverses the text direction */}
-        </div> : null
+        </AddNoteInput> : null
     }
 
     createTextBox = () => {
         return (
-            <div id='text' className='addNoteInput' name='text' contentEditable
+            <AddNoteInput id='text' name='text' contentEditable
                 suppressContentEditableWarning={true} data-placeholder='Add a note...'
                 onInput={this.handleChange}>{/* should be empty otherwise it reverses text direction */}
-            </div>
+            </AddNoteInput>
         )
     }
 
@@ -108,15 +108,15 @@ export default class NewNote extends React.Component{
             {
                 (mutate, result) => {
                     return (
-                        <div id='addNoteContainer' onClick={this.handleClick} autoComplete='off'>
+                        <AddNoteContainer onClick={this.handleClick} autoComplete='off'>
                             {this.createTitleBox()}
                             {this.createTextBox()}
                             {
                                 this.props.displayTitleInputBox ?
-                                <button id='addNoteButton' type='submit' disabled={this.state.disabled}
-                                onClick={this.handleAddNote.bind(this, mutate)}>Add</button> : null
+                                <AddNoteButton type='submit' disabled={this.state.disabled}
+                                onClick={this.handleAddNote.bind(this, mutate)}>Add</AddNoteButton> : null
                             }
-                        </div>
+                        </AddNoteContainer>
                     )
                 }
             }
@@ -124,3 +124,55 @@ export default class NewNote extends React.Component{
         )
     }
 }
+
+const AddNoteContainer = styled.div`
+    background: white;
+    border: solid 1px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
+    margin-right:auto;
+    margin-left: auto;
+    margin-top: 2em;
+    width:97%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /*background:*/
+
+    @media only screen and (min-width: 1080px) {
+        width:40%;
+    }
+`
+
+const AddNoteInput = styled.div`
+    border:none;
+    width:96%;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 0.5em;
+    font-size: 18px;
+
+    :empty:before {
+        content:attr(data-placeholder);
+        color: lightgray;
+    }
+    :focus {outline: 0;}
+`
+
+const AddNoteButton = styled.button`
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 0.3em;
+    color: black;
+    font-size: 16px;
+    border: solid 1px transparent;
+    align-self: flex-end;
+
+    :hover {
+        border: solid 1px black;
+    }
+`

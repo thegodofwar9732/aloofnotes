@@ -4,7 +4,7 @@ import NewNote from './components/NewNote'
 import NotesContainer from './components/NotesContainer';
 import {ApolloProvider} from 'react-apollo'
 import ApolloClient from 'apollo-boost'
-import './Home.css';
+import styled from 'styled-components'
 
 class App extends Component {
 
@@ -40,16 +40,22 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={this.client} >
-        <div onClick={this.turnOffTitleBox}>
+        <HomeDiv onClick={this.turnOffTitleBox}>
           <Navbar/>
           <NewNote displayTitleInputBox={this.state.displayTitleInputBox} turnOnTitleBox={this.turnOnTitleBox} turnOffTitleBox={this.turnOffTitleBox}
           ref={(newNoteChildComponent)=> this.newNoteChildComponent = newNoteChildComponent}/>
           <br/><br/>
           <NotesContainer/>
-        </div>
+        </HomeDiv>
       </ApolloProvider>
     );
   }
 }
 
 export default App;
+
+const HomeDiv = styled.div`
+    font-family: 'Roboto';
+    background: #43abc9;
+    height: 100%;
+`

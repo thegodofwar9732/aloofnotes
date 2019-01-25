@@ -1,7 +1,7 @@
 import React from 'react' 
 import {Query} from 'react-apollo'
+import styled from 'styled-components'
 import {getAllNotesQuery} from '../queries'
-import './NotesContainer.css'
 import Note from './Note'
 import Modal from './Modal'
 
@@ -13,9 +13,9 @@ export default class NotesContainer extends React.Component{
     // make sure theres not too mant rerenders
     createNotes = ({allNotes})=> {
         return (
-            <div id='allNotesContainer'>
+            <AllNotesContainer>
                 {allNotes.map(note => <Note key={note.id} note={note} showModal={this.showModal} />).reverse()}
-            </div>
+            </AllNotesContainer>
         )   
     }
 
@@ -59,3 +59,14 @@ export default class NotesContainer extends React.Component{
         )
     }
 }
+
+const AllNotesContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media only screen and (min-width: 1080px) {
+        grid-template-columns: repeat(4, 1fr);
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+`
