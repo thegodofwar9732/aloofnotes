@@ -1,0 +1,13 @@
+/* the following is to make sure that the home component stretches vertically 
+all the way to the viewport even if the content is too small
+otherwise the background of the rest of the page can't be changed
+*/
+body, html{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#root, #root > div {
+    height: 100%;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Note.css'
+import styled from 'styled-components'
 
 export default class Note extends React.Component {
 
@@ -15,10 +15,31 @@ export default class Note extends React.Component {
         const note = this.props.note
         note.text = note.text.replace(/\n/g, '<br/>');
         return (
-            <div id={note.id} className='noteBox' onClick={this.showModal.bind(this, note)}>
-                <span id='noteTitle'  dangerouslySetInnerHTML={{__html: note.title}}></span>
-                <span id='noteText' dangerouslySetInnerHTML={{__html: note.text}}></span>
-            </div>
+            <NoteBox id={note.id} onClick={this.showModal.bind(this, note)}>
+                <NoteTitle id='noteTitle'  dangerouslySetInnerHTML={{__html: note.title}}></NoteTitle>
+                <NoteText id='noteText' dangerouslySetInnerHTML={{__html: note.text}}></NoteText>
+            </NoteBox>
         )
     }
 }
+
+const NoteBox = styled.div`
+    background: #fff;
+    border-radius: 5px;
+    margin: 3% 1% 3% 1%;
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    @media only screen and (min-width: 1080px) {
+        margin: 5%;
+    }
+`
+
+const NoteTitle = styled.span`
+    font-size: 20px;
+    font-weight: bold;
+`
+const NoteText = styled.span`
+    margin-top: 1em;
+`
