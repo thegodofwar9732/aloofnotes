@@ -108,7 +108,7 @@ export default class NewNote extends React.Component{
             {
                 (mutate, result) => {
                     return (
-                        <AddNoteContainer onClick={this.handleClick} autoComplete='off'>
+                        <AddNoteContainer onClick={this.handleClick} autoComplete='off' darkTheme={this.props.darkTheme}>
                             {this.createTitleBox()}
                             {this.createTextBox()}
                             {
@@ -126,7 +126,7 @@ export default class NewNote extends React.Component{
 }
 
 const AddNoteContainer = styled.div`
-    background: white;
+    background: ${props => props.darkTheme ? `rgb(40, 40, 40)` : `white`};
     border: solid 1px;
     border-radius: 5px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
@@ -152,6 +152,7 @@ const AddNoteInput = styled.div`
     padding: 1%;
     margin: 0.5em;
     font-size: 18px;
+    word-wrap: break-word;
 
     :empty:before {
         content:attr(data-placeholder);

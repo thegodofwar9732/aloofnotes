@@ -10,13 +10,16 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {displayTitleInputBox: false}
+    this.state = {displayTitleInputBox: false, darkTheme: true}
     let myUri = 'http://localhost:5000/graphql'
     console.log('process', process.env.NODE_ENV)
     if (process.env.NODE_ENV === 'production') myUri = '/graphql'
     this.client = new ApolloClient({uri:myUri})
   }
 
+  toggleDarkTheme = () => {
+    this.setState(prevState => ({darkTheme: !prevState.darkTheme}))
+  }
 
   turnOnTitleBox = () => this.setState({displayTitleInputBox: true})
   
@@ -40,12 +43,12 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={this.client} >
-        <HomeDiv onClick={this.turnOffTitleBox}>
-          <Navbar/>
-          <NewNote displayTitleInputBox={this.state.displayTitleInputBox} turnOnTitleBox={this.turnOnTitleBox} turnOffTitleBox={this.turnOffTitleBox}
+        <HomeDiv onClick={this.turnOffTitleBox} darkTheme={this.state.darkTheme}>
+          <Navbar toggleDarkTheme={this.toggleDarkTheme}/>
+          <NewNote displayTitleInputBox={this.state.displayTitleInputBox} turnOnTitleBox={this.turnOnTitleBox} turnOffTitleBox={this.turnOffTitleBox} darkTheme={this.state.darkTheme}
           ref={(newNoteChildComponent)=> this.newNoteChildComponent = newNoteChildComponent}/>
           <br/><br/>
-          <NotesContainer/>
+          <NotesContainer darkTheme={this.state.darkTheme}/>
         </HomeDiv>
       </ApolloProvider>
     );
@@ -56,6 +59,7 @@ export default App;
 
 const HomeDiv = styled.div`
     font-family: 'Roboto';
-    background: #43abc9;
+    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `#43abc9`};
+    color: ${props => props.darkTheme ? `white` : `black`};
     height: 100%;
 `

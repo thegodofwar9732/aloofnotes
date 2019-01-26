@@ -14,7 +14,7 @@ export default class NotesContainer extends React.Component{
     createNotes = ({allNotes})=> {
         return (
             <AllNotesContainer>
-                {allNotes.map(note => <Note key={note.id} note={note} showModal={this.showModal} />).reverse()}
+                {allNotes.map(note => <Note key={note.id} darkTheme={this.props.darkTheme} note={note} showModal={this.showModal} />).reverse()}
             </AllNotesContainer>
         )   
     }
@@ -35,7 +35,7 @@ export default class NotesContainer extends React.Component{
     }
 
     createModal = ()=> {
-        return <Modal note={this.state.noteToBeEdited} closeModal={this.closeModal}/>       
+        return <Modal note={this.state.noteToBeEdited} closeModal={this.closeModal} darkTheme={this.props.darkTheme}/>       
     }
 
     render() {
