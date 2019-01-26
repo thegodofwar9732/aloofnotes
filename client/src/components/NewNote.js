@@ -114,7 +114,8 @@ export default class NewNote extends React.Component{
                             {
                                 this.props.displayTitleInputBox ?
                                 <AddNoteButton type='submit' disabled={this.state.disabled}
-                                onClick={this.handleAddNote.bind(this, mutate)}>Add</AddNoteButton> : null
+                                onClick={this.handleAddNote.bind(this, mutate)}
+                                darkTheme={this.props.darkTheme}>Add</AddNoteButton> : null
                             }
                         </AddNoteContainer>
                     )
@@ -162,18 +163,18 @@ const AddNoteInput = styled.div`
 `
 
 const AddNoteButton = styled.button`
-    background: #fff;
+    background: inherit;
     border-radius: 10px;
     border: none;
     padding: 0.2em 0.5em 0.2em 0.5em;
     margin-right: 0.5em;
     margin-bottom: 0.3em;
-    color: black;
+    color: inherit;
     font-size: 16px;
     border: solid 1px transparent;
     align-self: flex-end;
 
     :hover {
-        border: solid 1px black;
+        border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     }
 `

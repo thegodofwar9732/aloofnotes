@@ -3,13 +3,16 @@ import styled from 'styled-components'
 
 export default class Navbar extends React.Component {
     
-    toggleDarkTheme = () => this.props.toggleDarkTheme()
+    toggleDarkTheme = (event) => {
+        event.stopPropagation()
+        this.props.toggleDarkTheme()
+    }
 
     render(){
         return (
             <NavDiv>
                 <HomeSpan>Home</HomeSpan>
-                <ToggleDarkThemeButton onClick={this.toggleDarkTheme}>Toggle Theme</ToggleDarkThemeButton>
+                <ToggleDarkThemeButton onClick={this.toggleDarkTheme} darkTheme={this.props.darkTheme}>Toggle Theme</ToggleDarkThemeButton>
             </NavDiv>
         )
     }
@@ -40,9 +43,8 @@ const HomeSpan = styled.div`
     `
     
     const ToggleDarkThemeButton = styled.div`
-    border: solid 1px black;
+    border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     font-size: 20px;
     border-radius: 10px;
     padding: 0.2em;
-    
 `

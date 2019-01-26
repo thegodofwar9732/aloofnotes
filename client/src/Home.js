@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <ApolloProvider client={this.client} >
         <HomeDiv onClick={this.turnOffTitleBox} darkTheme={this.state.darkTheme}>
-          <Navbar toggleDarkTheme={this.toggleDarkTheme}/>
+          <Navbar toggleDarkTheme={this.toggleDarkTheme} darkTheme={this.state.darkTheme}/>
           <NewNote displayTitleInputBox={this.state.displayTitleInputBox} turnOnTitleBox={this.turnOnTitleBox} turnOffTitleBox={this.turnOffTitleBox} darkTheme={this.state.darkTheme}
           ref={(newNoteChildComponent)=> this.newNoteChildComponent = newNoteChildComponent}/>
           <br/><br/>
