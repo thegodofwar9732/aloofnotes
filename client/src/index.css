@@ -4,7 +4,7 @@ otherwise the background of the rest of the page can't be changed
 */
 body, html{
     margin: 0;
-    height: auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }

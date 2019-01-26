@@ -11,8 +11,12 @@ export default class NewNote extends React.Component{
         let titleOrText = event.target.getAttribute('name')
 
         this.setState({[titleOrText]: event.target.innerHTML})
-        // disable add note button if no text
-        if (document.getElementById('text').innerHTML.length === 0) this.setState({disabled: true})
+
+        const currentTitle = document.getElementById('title').innerHTML
+        const currentText = document.getElementById('text').innerHTML
+
+        // disable add note button if no text AND no title
+        if (currentTitle.length === 0 && currentText.length === 0) this.setState({disabled: true})
         else this.setState({disabled: false})
     }
     
@@ -31,10 +35,12 @@ export default class NewNote extends React.Component{
         const title = document.getElementById('title').innerHTML
         let text = document.getElementById('text').innerHTML
         
-        text = text.replace(/<div>/gi, '\n');
-        text = text.replace(/<\/div>/gi, '');
-        text = text.replace(/<br>/gi, '');
-         
+        if (text.length > 0) {
+            text = text.replace(/<div>/gi, '\n');
+            text = text.replace(/<\/div>/gi, '');
+            text = text.replace(/<br>/gi, '');
+        }
+
         // clear form and hide title box
         this.setState({title: '', text: ''}, ()=> this.props.turnOffTitleBox())
         

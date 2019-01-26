@@ -62,4 +62,11 @@ const HomeDiv = styled.div`
     background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `#43abc9`};
     color: ${props => props.darkTheme ? `white` : `black`};
     height: 100%;
+
+    /*
+    this is needed so that background color will stretch
+    all the way to the bottom when notes overflow past the
+    browser screen height 
+    */
+    overflow: auto; 
 `
