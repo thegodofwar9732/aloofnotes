@@ -30,12 +30,12 @@ export default class NotesContainer extends React.Component{
     
     // goes to note.js
     // add the note to the state so that createModal function can access it
-    showModal = (note)=> {
-        this.setState({showModal: true, noteToBeEdited: note})
+    showModal = (note, autoFocusLocation)=> {
+        this.setState({showModal: true, noteToBeEdited: note, autoFocusLocation: autoFocusLocation})
     }
 
     createModal = ()=> {
-        return <Modal note={this.state.noteToBeEdited} closeModal={this.closeModal} darkTheme={this.props.darkTheme}/>       
+        return <Modal note={this.state.noteToBeEdited} closeModal={this.closeModal} darkTheme={this.props.darkTheme} autoFocusLocation={this.state.autoFocusLocation}/>       
     }
 
     render() {

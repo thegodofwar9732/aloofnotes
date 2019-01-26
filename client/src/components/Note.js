@@ -3,9 +3,14 @@ import styled from 'styled-components'
 
 export default class Note extends React.Component {
 
-    showModal = (note) => {
-        this.props.showModal(note)
+    showModal = (note, event) => {
+        let autoFocusLocation
+        if (event.target.id === 'noteTitle')
+            autoFocusLocation = 'title'
+        else autoFocusLocation = 'text'
 
+        this.props.showModal(note, autoFocusLocation)
+        
         // hide original note box while modal is here
         let noteBox = document.getElementById(note.id)
         noteBox.style.visibility = 'hidden'
@@ -41,6 +46,7 @@ const NoteTitle = styled.span`
     font-size: 20px;
     font-weight: bold;
     `
-    const NoteText = styled.span`
+const NoteText = styled.span`
     margin-top: 1em;
+    height: 100%; //make it fill up the rest of the noteBox
 `

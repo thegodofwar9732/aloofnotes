@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Mutation} from 'react-apollo'
 import {editNoteMutation} from '../queries'
 import styled from 'styled-components'
+import {placeCaretAtEnd} from '../helper'
 
 export default class Modal extends Component {
 
@@ -38,6 +39,20 @@ export default class Modal extends Component {
         })
     }
 
+    componentDidMount() {
+        // if user clicked on title, autofocus on title
+        // otherwise autofocus on text
+        if(this.props.autoFocusLocation === 'title')
+            /* using only focus() causes caret to go to the beginnning to text or title 
+            instead of at the end of it, so need to use helper function to correct that
+            */
+            placeCaretAtEnd(document.getElementById('editTitle'))
+        else
+            placeCaretAtEnd(document.getElementById('editText'))
+    }
+
+    
+
     render() {
     let note = this.props.note
     // apollo cache is being updated automatically
@@ -50,7 +65,7 @@ export default class Modal extends Component {
                     <ModalDiv id='modal' darkTheme={this.props.darkTheme}>
                         <EditNoteTitle contentEditable id='editTitle' suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: note.title}} onKeyDown={this.preventLineBreak}
                         ></EditNoteTitle>
-                        <EditNoteText contentEditable id='editText' suppressContentEditableWarning={true} autofocus dangerouslySetInnerHTML={{__html: note.text}}></EditNoteText>
+                        <EditNoteText contentEditable id='editText' suppressContentEditableWarning={true} dangerouslySetInnerHTML={{__html: note.text}}></EditNoteText>
                         <EditNoteButton onClick={this.editNoteAndClose.bind(this, note, mutate)} darkTheme={this.props.darkTheme}>Done</EditNoteButton>
                     </ModalDiv>
                 )
@@ -118,3 +133,4 @@ const EditNoteButton = styled.button`
         border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     }
 `
+
