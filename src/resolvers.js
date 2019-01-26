@@ -23,12 +23,16 @@ const resolvers =
         }
     },
   Mutation: {
-        addNote: async (obj, args, context, info) => {
-            
-            args.input.created = getCreatedTime()
-            const response = await noteModel.create(args.input)
-            return response
-      } 
+    addNote: async (obj, args, context, info) => {  
+        args.input.created = getCreatedTime()
+        const response = await noteModel.create(args.input)
+        return response
+    }, 
+    editNote: async (obj, args, context) => {
+        const response = await noteModel.findByIdAndUpdate(args.input.id, args.input, {new:true}) 
+        return response
+    }
+
   }
 }
 
