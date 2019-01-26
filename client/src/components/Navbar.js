@@ -20,13 +20,12 @@ const NavDiv = styled.div`
     height: 50px;
     display:flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
     @media only screen and (min-width: 1080px) {
         height: 40px;
         margin-left: 10px;
         margin-right: 10px;
-        justify-content: space-between;
     } 
 `
 

@@ -92,9 +92,9 @@ const ModalDiv = styled.div`
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
     border-radius: 5px;
     position: fixed;
-    left: 3%;
+    left: 1%;
     top: 20%;
-    width: 85%;
+    width: 89%;
     display: flex;
     flex-direction: column;
     padding: 1em;    
@@ -112,12 +112,14 @@ const EditNoteTitle = styled.span`
     min-height: 1.5em;
     font-weight: bold;
     word-wrap: break-word;
+    :focus {outline: 0;}
     `
     
     const EditNoteText = styled.span`
     background: none;
     font-size: 1em;
     word-wrap: break-word;
+    :focus {outline: 0;}
 `
 
 const EditNoteButton = styled.button`
