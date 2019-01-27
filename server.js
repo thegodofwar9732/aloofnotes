@@ -1,11 +1,11 @@
-import express from 'express'
-import cors from 'cors'
-import {ApolloServer} from 'apollo-server-express'
-import mongoose from 'mongoose'
-import resolvers from './resolvers.js'
-import schema from './schema.js'
-import noteModel from './model'
-import path from 'path'
+const express = require('express')
+const cors = require('cors')
+const {ApolloServer} = require('apollo-server-express')
+const mongoose = require('mongoose')
+const resolvers = require('./src/resolvers.js')
+const schema = require('./src/schema.js')
+const noteModel = require('./src/model')
+const path = require('path')
 const PORT = process.env.PORT || 5000
 
 const app = express()
