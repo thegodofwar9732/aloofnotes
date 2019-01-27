@@ -1,4 +1,4 @@
-import {gql} from 'apollo-server-express'
+const {gql} =  require('apollo-server-express')
 
 const schema = gql`
   type Query {
@@ -28,4 +28,4 @@ const schema = gql`
     mutation: Mutation
   }
 `
-export default schema
+module.exports = schema
