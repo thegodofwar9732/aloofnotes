@@ -1,4 +1,4 @@
-import noteModel from './model'
+const noteModel = require('./model')
 
 // gets number of milliseconds since epoch
 const getCreatedTime = ()=> {
@@ -36,4 +36,4 @@ const resolvers =
   }
 }
 
-export default resolvers
+module.exports = resolvers

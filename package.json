@@ -7,15 +7,13 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "webpack && node bundle.js",
-    "build": "webpack",
+    "start": "node server.js",
     "build-client": "npm run build --prefix ./client",
-    "now": "node bundle.js",
-    "dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"",
+    "dev": "nodemon bundle.js",
     "client": "npm run start --prefix ./client",
-    "both": "concurrently \"node bundle.js\"  \"npm run start --prefix ./client\" ",
-    "both-dev": "concurrently \"webpack --watch\" \"nodemon bundle.js\"  \"npm run start --prefix ./client\" ",
-    "heroku-postbuild": "webpack -p && npm install --prefix ./client && npm run build --prefix ./client" 
+    "both": "concurrently \"node server.js\"  \"npm run start --prefix ./client\" ",
+    "both-dev": "concurrently \"nodemon server.js\"  \"npm run start --prefix ./client\" ",
+    "heroku-postbuild": "npm install --prefix ./client && npm run build --prefix ./client"
   },
   "dependencies": {
     "apollo-boost": "^0.1.23",
@@ -27,9 +25,7 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.9",
-    "webpack": "4.19.1",
-    "webpack-cli": "^3.1.2"
+    "nodemon": "^1.18.9"
   },
   "repository": {
     "type": "git",
