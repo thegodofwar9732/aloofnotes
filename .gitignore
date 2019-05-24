@@ -6,3 +6,5 @@ bundle.js
 
 # bundled client
 build
+
+.env
