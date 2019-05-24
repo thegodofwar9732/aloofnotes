@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV === 'development') require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const {ApolloServer} = require('apollo-server-express')
@@ -50,7 +51,7 @@ app.get('*', (req, res) => {
 
 app.use(cors)
 
-mongoose.connect('mongodb://admin:admin1@ds145704.mlab.com:45704/mydb', {useNewUrlParser: true})
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true})
 .then(response => console.log('Connected to db!'))
 
 app.listen(PORT, ()=> {
