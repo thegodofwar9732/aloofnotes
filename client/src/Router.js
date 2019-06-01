@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import App from './App'
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import Home from './Home'
 
 export default class Router extends Component {
   render() {
     return (
       <BrowserRouter>
-        <App/>
+        <Switch>
+          {/* this matches everything unless u add 'exact' prop */}
+          <Route path='/' component={Home} />
+        </Switch>
       </BrowserRouter>
     )
   }
