@@ -71,7 +71,7 @@ export default class NewNote extends React.Component{
         let {allNotes} = cache.readQuery({query: getAllNotesQuery })
         cache.writeQuery({
             query: getAllNotesQuery,
-            data: {allNotes: allNotes.concat([result.data.addNote])}
+            data: {allNotes: [result.data.addNote, ...allNotes]}
         })
     }
 
@@ -132,11 +132,10 @@ export default class NewNote extends React.Component{
     }
 }
 
-const AddNoteContainer = styled.div`
+export const AddNoteContainer = styled.div`
     background: ${props => props.darkTheme ? `rgb(40, 40, 40)` : `white`};
-    border: solid 1px;
     border-radius: 5px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px ${props => props.darkTheme ? `white` : `black`};
     margin-right:auto;
     margin-left: auto;
     margin-top: 2em;
@@ -146,13 +145,14 @@ const AddNoteContainer = styled.div`
     align-items: center;
     justify-content: space-around;
     /*background:*/
-
+    
     @media only screen and (min-width: 1080px) {
         width:40%;
     }
 `
-
-const AddNoteInput = styled.div`
+    // border: solid 1px;
+// TODO: change this to span to prevent submission of empty notes that have been cleared after typing some characters
+export const AddNoteInput = styled.span`
     border:none;
     width:96%;
     border-radius: 10px;
@@ -168,7 +168,8 @@ const AddNoteInput = styled.div`
     :focus {outline: 0;}
 `
 
-const AddNoteButton = styled.button`
+export const AddNoteButton = styled.button`
+    cursor: ${props => props.disabled ? `normal` : `pointer`};
     background: inherit;
     border-radius: 10px;
     border: none;
@@ -179,8 +180,11 @@ const AddNoteButton = styled.button`
     font-size: 16px;
     border: solid 1px transparent;
     align-self: flex-end;
-
-    :hover {
-        border: solid 1px ${props => props.darkTheme ? `white` : `black`};
+    ${
+        // no hover if disabled
+        props => props.disabled ? null :
+        `:hover {
+            border: solid 1px ${props.darkTheme ? `white` : `black`};
+        }`
     }
 `

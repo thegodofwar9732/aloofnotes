@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from './components/Navbar'
-import NewNote from './components/NewNote'
-import NotesContainer from './components/NotesContainer';
+import Navbar from './Navbar'
+import NewNote from './NewNote'
+import NotesContainer from './NotesContainer';
 import {ApolloProvider} from 'react-apollo'
 import ApolloClient from 'apollo-boost'
 import styled from 'styled-components'
@@ -57,9 +57,10 @@ class App extends Component {
 
 export default App;
 
-const HomeDiv = styled.div`
+export const HomeDiv = styled.div`
+    id: home;
     font-family: 'Roboto';
-    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `#43abc9`};
+    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `white`};
     color: ${props => props.darkTheme ? `white` : `black`};
     height: 100%;
 

@@ -14,7 +14,7 @@ export default class NotesContainer extends React.Component{
     createNotes = ({allNotes})=> {
         return (
             <AllNotesContainer>
-                {allNotes.map(note => <Note key={note.id} darkTheme={this.props.darkTheme} note={note} showModal={this.showModal} />).reverse()}
+                {allNotes.map(note => <Note key={note.id} darkTheme={this.props.darkTheme} note={note} showModal={this.showModal} />)}
             </AllNotesContainer>
         )   
     }

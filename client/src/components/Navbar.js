@@ -12,13 +12,14 @@ export default class Navbar extends React.Component {
         return (
             <NavDiv>
                 <HomeSpan>Home</HomeSpan>
-                <ToggleDarkThemeButton onClick={this.toggleDarkTheme} darkTheme={this.props.darkTheme}>Toggle Theme</ToggleDarkThemeButton>
+                <ToggleThemeButton onClick={this.toggleDarkTheme} darkTheme={this.props.darkTheme}>Toggle Theme</ToggleThemeButton>
             </NavDiv>
         )
     }
 }
 
-const NavDiv = styled.div`
+export const NavDiv = styled.div`
+    id: nav;
     background: inherit;
     height: 50px;
     display:flex;
@@ -32,7 +33,7 @@ const NavDiv = styled.div`
     } 
 `
 
-const HomeSpan = styled.div`
+export const HomeSpan = styled.div`
     margin-left: 1%;
     background: inherit;
     font-size: 24px;
@@ -42,9 +43,11 @@ const HomeSpan = styled.div`
     }
     `
     
-    const ToggleDarkThemeButton = styled.div`
+export const ToggleThemeButton = styled.div`
     border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     font-size: 20px;
     border-radius: 10px;
     padding: 0.2em;
+    cursor: pointer;
+    user-select: none;
 `
