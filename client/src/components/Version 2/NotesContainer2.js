@@ -57,7 +57,8 @@ const NoteBox = styled.div`
     margin: 3% 1% 3% 1%;
     padding: 3%;
 	display: flex;
-	word-wrap: anywhere;
+	// word-wrap: anywhere;
+	word-break: break-word;
     flex-direction: column;
     justify-content: flex-start;
     @media only screen and (min-width: 1080px) {
