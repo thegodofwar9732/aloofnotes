@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import {getAllNotesRequest, editNoteRequest} from '../../requests'
 import styled from 'styled-components'
 import Note2 from './Note2'
+import {placeCaretAtEnd} from '../../helper'
 
 const colNum = window.innerWidth < 400 ? 1 : 4 // is NOT responsive if horizontal viewport is manually changed by the user, TODO: make it responsive
 const columnWidth = Math.floor(100/colNum)
@@ -10,10 +11,11 @@ const requestDelay = 1000
 function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...otherProps}) {
 	// TODO: add error state
 	const [loading, setLoading] = useState(true)
-	const [showModal, setShowModal] = useState(false)
+	const [modal, setModal] = useState({show: false, whereAutofocus: ''})
 	const [modalNote, setModalNote] = useState({title: '', text: ''})
 	let childUniqueKey = 0
 	let requestTimer = useRef(null)
+	
 	useEffect(()=> {		
 		(async ()=> {
 			const {data} = await getAllNotesRequest()
@@ -25,9 +27,9 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 	if (loading) return <div>Loading...</div>
 
 	const openNoteInModal = (e, {id, title, text}) => {
-
+		const whereAutofocus = e.target.id
 		setModalNote({id, title, text})
-		setShowModal(true)
+		setModal({show: true, whereAutofocus})
 		// hide note when modal opens
 		let noteBox = document.getElementById(id)
         noteBox.style.visibility = 'hidden'
@@ -74,17 +76,17 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		<ColumnGroup>
 			{ columns.map(column => <Column key={childUniqueKey++}  width={columnWidth}>{column}</Column>) }
 		</ColumnGroup>
-		<Modal showModal={showModal} setShowModal={setShowModal} note={modalNote} saveChanges={saveChanges} updateUI={updateUI}  {...otherProps}/>
+		<Modal modal={modal} setModal={setModal} note={modalNote} saveChanges={saveChanges} updateUI={updateUI}  {...otherProps}/>
 	</>)
 }
 
 
-function Modal({note: {id, title, text}, showModal, setShowModal, saveChanges, updateUI, darkTheme}) {
+function Modal({note: {id, title, text}, modal, setModal, saveChanges, updateUI, darkTheme}) {
 	let modified = false
 
 	const closeModal = htmlId => {
 		if (htmlId === 'modalBackground') {
-			setShowModal(false)
+			setModal({show: false, whereAutofocus: ''})
 
 			// restore note when modal closes
 			let noteBox = document.getElementById(id)
@@ -102,7 +104,14 @@ function Modal({note: {id, title, text}, showModal, setShowModal, saveChanges, u
 		saveChanges({id, title, text, [key]: newValue})
 	}
 
-	return showModal && (
+	useEffect(() => {
+		if (modal.whereAutofocus === 'noteTitle')
+			placeCaretAtEnd(document.getElementById('modalTitle'))
+		if (modal.whereAutofocus === 'noteText')
+			placeCaretAtEnd(document.getElementById('modalText'))
+	})
+
+	return modal.show && (
 		<ModalBackground onMouseDown={e=> closeModal(e.target.id)} id='modalBackground'>
 			<ModalDiv darkTheme={darkTheme}>
 				<EditNoteTitle contentEditable suppressContentEditableWarning onInput={handleInput} id='modalTitle' name='title'>{title}</EditNoteTitle>
