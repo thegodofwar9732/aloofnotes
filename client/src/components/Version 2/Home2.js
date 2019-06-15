@@ -2,24 +2,26 @@ import React, {useState} from 'react'
 import Navbar2 from './Navbar2'
 import NewNote2 from './NewNote2'
 import NotesContainer2 from './NotesContainer2'
-import {HomeDiv} from '../Home'
+import styled from 'styled-components'
 
 function Home2 () {
-	const [showTitle, setTitleVisibility] = useState(false)
+	const [showTitle, setShowTitle] = useState(false)
 	const [darkTheme, toggleTheme] = useDarkTheme(true)
 	const [notes, setNotes] = useState([])
+	const [notesVersion, setNotesVersion] = useState(0) // state to keep track of notes 'versions', everytime a note is modified, notes is updatd and this variable is incremented notify NotesContainer to update
 	return (
-			<HomeDiv darkTheme={darkTheme} onClick={hideTitle.bind(this, setTitleVisibility)}>
+			<HomeDiv darkTheme={darkTheme} onClick={hideTitle.bind(this, setShowTitle)}>
 				<Navbar2 darkTheme={darkTheme} toggleTheme={toggleTheme} />
 				<NewNote2 notes={notes} setNotes={setNotes}
-				setTitleVisibility={setTitleVisibility}
+				setShowTitle={setShowTitle}
 				darkTheme={darkTheme} showTitle={showTitle}/>
-				<NotesContainer2 darkTheme={darkTheme} notes={notes} setNotes={setNotes} />	
+				<NotesContainer2 darkTheme={darkTheme} notes={notes} setNotes={setNotes} 
+					notesVersion={notesVersion} setNotesVersion={setNotesVersion} />	
 			</HomeDiv>
 	)
 }
 
-function hideTitle(setTitleVisibility, e) {
+function hideTitle(setShowTitle, e) {
 	const id = e.nativeEvent.target.id
 	// ids of elements whose own event handlers should fire instead of this one to avoid collision
 	const elementIdsToIgnore = ['theme', 'title', 'text', 'addnote', 'addNoteContainer']
@@ -31,7 +33,7 @@ function hideTitle(setTitleVisibility, e) {
 	// don't hide if there is text
 	if(title.length > 0 || text.length > 0) return
 
-	setTitleVisibility(false)
+	setShowTitle(false)
 }
 
 function useDarkTheme (isDark) {
@@ -42,5 +44,15 @@ function useDarkTheme (isDark) {
 	}
 	return [darkTheme, toggleTheme]
 }
+
+const HomeDiv = styled.div`
+    id: home;
+    font-family: 'Roboto';
+    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `white`};
+    color: ${props => props.darkTheme ? `white` : `black`};
+    height: 100%;
+
+    overflow: auto; // this is needed so that background color will stretch all the way to the bottom when notes overflow past the browser screen height
+`
 
 export default Home2

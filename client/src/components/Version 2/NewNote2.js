@@ -2,19 +2,18 @@ import React, {useState} from 'react'
 import {AddNoteContainer, AddNoteInput, AddNoteButton} from '../NewNote'
 import {addNoteRequest} from '../../requests'
 
-export default function NewNote2 (props) {
-	console.log('render newnote2')
+function NewNote2 (props) {
 	const [note, setNote] = useState({title: '', text: ''})
 	const [isDisabled, setDisabled] = useState(true)
-	const {notes, setNotes, showTitle, setTitleVisibility, darkTheme} = props
+	const {notes, setNotes, showTitle, setShowTitle, darkTheme} = props
 
 	const handleAddNoteArgs = {
-		note, setNote, setTitleVisibility, setDisabled, notes, setNotes
+		note, setNote, setShowTitle, setDisabled, notes, setNotes
 	}
 
 	return ( 
 		<AddNoteContainer id='addNoteContainer'
-		onClick={e => revealTitle(setTitleVisibility, e)}
+		onClick={e => revealTitle(setShowTitle, e)}
 		darkTheme={darkTheme}
 		autoComplete='off'>
 			<TitleInput setDisabled={setDisabled}
@@ -34,14 +33,14 @@ export default function NewNote2 (props) {
 	)
 }
 
-function revealTitle (setTitleVisibility, e) {
+function revealTitle (setShowTitle, e) {
 	const id = e.nativeEvent.target.id
 	// ignore add note button to avoid collision
 	if(id === 'addnote') return
-	setTitleVisibility(true)
+	setShowTitle(true)
 }
 
-async function handleAddNote ({note, setNote, setTitleVisibility, setDisabled, notes, setNotes}) {
+async function handleAddNote ({note, setNote, setShowTitle, setDisabled, notes, setNotes}) {
 	let {title, text} = note
 	text = sanitize(text)
 
@@ -52,7 +51,7 @@ async function handleAddNote ({note, setNote, setTitleVisibility, setDisabled, n
 	// clear state, hide title and disable button
 	setNote({title: '', text: ''})		
 	setDisabled(true)
-	setTitleVisibility(false)
+	setShowTitle(false)
 
 	const {data: {newNote}} = await addNoteRequest({title, text})
 
@@ -111,3 +110,11 @@ function preventLineBreak (e) {
 		document.querySelector('#text').focus()
 	}
 }
+
+function areEqual (prevProps, nextProps) {
+	if (prevProps.showTitle !== nextProps.showTitle) return false
+	if (prevProps.darkTheme !== nextProps.darkTheme) return false
+	return true
+}
+
+export default React.memo(NewNote2, areEqual)

@@ -12,7 +12,6 @@ class App extends Component {
     super(props)
     this.state = {displayTitleInputBox: false, darkTheme: true}
     let myUri = 'http://localhost:5000/graphql'
-    console.log('process', process.env.NODE_ENV)
     if (process.env.NODE_ENV === 'production') myUri = '/graphql'
     this.client = new ApolloClient({uri:myUri})
   }
@@ -57,10 +56,10 @@ class App extends Component {
 
 export default App;
 
-export const HomeDiv = styled.div`
+const HomeDiv = styled.div`
     id: home;
     font-family: 'Roboto';
-    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `white`};
+    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `#43abc9`};
     color: ${props => props.darkTheme ? `white` : `black`};
     height: 100%;
 

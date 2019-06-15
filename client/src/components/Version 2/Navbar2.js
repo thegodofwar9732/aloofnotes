@@ -1,8 +1,7 @@
 import React from 'react'
 import {NavDiv, HomeSpan, ToggleThemeButton} from '../Navbar'
 
-export default function Navbar2 (props) {
-	console.log('render navbar2')
+function Navbar2 (props) {
 	function toggleTheme(e) {
 		props.toggleTheme()
 	}
@@ -15,3 +14,10 @@ export default function Navbar2 (props) {
 		</NavDiv>
 	)
 }
+
+function areEqual(prevProps, nextProps) {
+	if (prevProps.darkTheme !== nextProps.darkTheme) return false
+	return true
+}
+
+export default React.memo(Navbar2, areEqual)

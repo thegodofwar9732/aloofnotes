@@ -77,8 +77,6 @@ export default class NewNote extends React.Component{
 
     // to prevent line breaks in title box
     preventLineBreak = (e)=> {
-        // console.log('e', e)
-        // console.log('e.keyCode', e.keyCode)
 
         // prevent 'enter' key from creating line break in title box
         if (e.keyCode === 13) {
