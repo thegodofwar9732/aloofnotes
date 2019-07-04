@@ -1,24 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default class Navbar extends React.Component {
-    
-    toggleDarkTheme = (event) => {
-        event.stopPropagation()
-        this.props.toggleDarkTheme()
-    }
-
-    render(){
-        return (
-            <NavDiv>
-                <HomeSpan>Home</HomeSpan>
-                <ToggleThemeButton onClick={this.toggleDarkTheme} darkTheme={this.props.darkTheme}>Toggle Theme</ToggleThemeButton>
-            </NavDiv>
-        )
-    }
+function Navbar2 (props) {
+	function toggleTheme(e) {
+		props.toggleTheme()
+	}
+	return (
+		<NavDiv>
+			<HomeSpan>Home</HomeSpan>
+			<ToggleThemeButton id='theme' 
+			onClick={toggleTheme} darkTheme={props.darkTheme} 
+			>Toggle Theme</ToggleThemeButton>
+		</NavDiv>
+	)
 }
 
-export const NavDiv = styled.div`
+function areEqual(prevProps, nextProps) {
+	if (prevProps.darkTheme !== nextProps.darkTheme) return false
+	return true
+}
+
+const NavDiv = styled.div`
     id: nav;
     background: inherit;
     height: 50px;
@@ -33,7 +35,7 @@ export const NavDiv = styled.div`
     } 
 `
 
-export const HomeSpan = styled.div`
+const HomeSpan = styled.div`
     margin-left: 1%;
     background: inherit;
     font-size: 24px;
@@ -43,7 +45,7 @@ export const HomeSpan = styled.div`
     }
     `
     
-export const ToggleThemeButton = styled.div`
+const ToggleThemeButton = styled.div`
     border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     font-size: 20px;
     border-radius: 10px;
@@ -51,3 +53,5 @@ export const ToggleThemeButton = styled.div`
     cursor: pointer;
     user-select: none;
 `
+
+export default React.memo(Navbar2, areEqual)

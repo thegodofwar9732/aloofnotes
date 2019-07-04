@@ -1,67 +1,58 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react'
 import Navbar from './Navbar'
 import NewNote from './NewNote'
-import NotesContainer from './NotesContainer';
-import {ApolloProvider} from 'react-apollo'
-import ApolloClient from 'apollo-boost'
+import NotesContainer from './NotesContainer'
 import styled from 'styled-components'
 
-class App extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {displayTitleInputBox: false, darkTheme: true}
-    let myUri = 'http://localhost:5000/graphql'
-    if (process.env.NODE_ENV === 'production') myUri = '/graphql'
-    this.client = new ApolloClient({uri:myUri})
-  }
-
-  toggleDarkTheme = () => {
-    this.setState(prevState => ({darkTheme: !prevState.darkTheme}))
-  }
-
-  turnOnTitleBox = () => this.setState({displayTitleInputBox: true})
-  
-  turnOffTitleBox = () => {
-
-    this.setState(prevState => {
-      // if title box is already off, do nothing
-      if (!prevState.displayTitleInputBox) return
-
-      // retriving a state variable from the child component 'NewNote'
-      const noteTitle = this.newNoteChildComponent.state.title  
-      const noteText = this.newNoteChildComponent.state.text
-
-      // don't hide title box if there is text in it
-      if (noteTitle.length === 0 && noteText.length === 0)
-        return {displayTitleInputBox: false}
-
-    })
-  }
-
-  render() {
-    return (
-      <ApolloProvider client={this.client} >
-        <HomeDiv onClick={this.turnOffTitleBox} darkTheme={this.state.darkTheme}>
-          <Navbar toggleDarkTheme={this.toggleDarkTheme} darkTheme={this.state.darkTheme}/>
-          <NewNote displayTitleInputBox={this.state.displayTitleInputBox} turnOnTitleBox={this.turnOnTitleBox} turnOffTitleBox={this.turnOffTitleBox} darkTheme={this.state.darkTheme}
-          ref={(newNoteChildComponent)=> this.newNoteChildComponent = newNoteChildComponent}/>
-          <br/><br/>
-          <NotesContainer darkTheme={this.state.darkTheme}/>
-        </HomeDiv>
-      </ApolloProvider>
-    );
-  }
+function Home2 () {
+	const [showTitle, setShowTitle] = useState(false)
+	const [darkTheme, toggleTheme] = useDarkTheme(true)
+	const [notes, setNotes] = useState([])
+	const [notesVersion, setNotesVersion] = useState(0) // state to keep track of notes 'versions', everytime a note is modified, notes is updatd and this variable is incremented notify NotesContainer to update
+	return (
+			<HomeDiv darkTheme={darkTheme} onClick={hideTitle.bind(this, setShowTitle)}>
+				<Navbar darkTheme={darkTheme} toggleTheme={toggleTheme} />
+				<NewNote notes={notes} setNotes={setNotes}
+				setShowTitle={setShowTitle}
+				darkTheme={darkTheme} showTitle={showTitle}/>
+				<NotesContainer darkTheme={darkTheme} notes={notes} setNotes={setNotes} 
+					notesVersion={notesVersion} setNotesVersion={setNotesVersion} />	
+			</HomeDiv>
+	)
 }
 
-export default App;
+function hideTitle(setShowTitle, e) {
+	const id = e.nativeEvent.target.id
+	// ids of elements whose own event handlers should fire instead of this one to avoid collision
+	const elementIdsToIgnore = ['theme', 'title', 'text', 'addnote', 'addNoteContainer']
+	if(elementIdsToIgnore.includes(id)) return
+
+	const titleElement = document.getElementById('title')
+	const title = titleElement && titleElement.innerHTML || ''
+	const text = document.getElementById('text').innerHTML
+	// don't hide if there is text
+	if(title.length > 0 || text.length > 0) return
+
+	setShowTitle(false)
+}
+
+function useDarkTheme (isDark) {
+	const [darkTheme, setDarkTheme] = useState(isDark)
+
+	function toggleTheme() {
+		setDarkTheme(!darkTheme)
+	}
+	return [darkTheme, toggleTheme]
+}
 
 const HomeDiv = styled.div`
     id: home;
     font-family: 'Roboto';
-    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `#43abc9`};
+    background: ${props => props.darkTheme ? `rgb(18, 18, 18)` : `white`};
     color: ${props => props.darkTheme ? `white` : `black`};
     height: 100%;
 
     overflow: auto; // this is needed so that background color will stretch all the way to the bottom when notes overflow past the browser screen height
 `
+
+export default Home2
