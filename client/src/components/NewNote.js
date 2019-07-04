@@ -1,142 +1,120 @@
-import React from 'react'
-import {Mutation} from 'react-apollo'
-import {addNoteMutation, getAllNotesQuery} from '../queries/index'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import {addNoteRequest} from '../requests'
 
-export default class NewNote extends React.Component{
-    state = {title: "", text:"", disabled:true}
-    
-    // let user type into the box
-    handleChange = (event)=> {
-        let titleOrText = event.target.getAttribute('name')
+function NewNote (props) {
+	const [note, setNote] = useState({title: '', text: ''})
+	const [isDisabled, setDisabled] = useState(true)
+	const {notes, setNotes, showTitle, setShowTitle, darkTheme} = props
 
-        this.setState({[titleOrText]: event.target.innerHTML})
+	const handleAddNoteArgs = {
+		note, setNote, setShowTitle, setDisabled, notes, setNotes
+	}
 
-        const currentTitle = document.getElementById('title').innerHTML
-        const currentText = document.getElementById('text').innerHTML
+	return ( 
+		<AddNoteContainer id='addNoteContainer'
+		onClick={e => revealTitle(setShowTitle, e)}
+		darkTheme={darkTheme}
+		autoComplete='off'>
+			<TitleInput setDisabled={setDisabled}
+			showTitle={showTitle} note={note}
+			setNote={setNote}/>
+			<TextInput setDisabled={setDisabled} 
+			setNote={setNote} note={note} />
+			{
+				showTitle ? 
+				<AddNoteButton id='addnote'
+				type='submit' disabled={isDisabled}
+				onClick={() => handleAddNote(handleAddNoteArgs)} 
+				darkTheme={darkTheme}>Add
+				</AddNoteButton> : null
+			}
+		</AddNoteContainer>
+	)
+}
 
-        // disable add note button if no text AND no title
-        if (currentTitle.length === 0 && currentText.length === 0) this.setState({disabled: true})
-        else this.setState({disabled: false})
-    }
-    
-    // turn on title input box
-    handleClick = (event) => {
-        // prevent confliction with handleClick on the parent component
-        event.stopPropagation()
-        if(!this.props.displayTitleInputBox)
-            this.props.turnOnTitleBox()
-    }
+function revealTitle (setShowTitle, e) {
+	const id = e.nativeEvent.target.id
+	// ignore add note button to avoid collision
+	if(id === 'addnote') return
+	setShowTitle(true)
+}
 
-    // send graphql mutation
-    handleAddNote = (mutate, event)=> {
-        event.preventDefault()
+async function handleAddNote ({note, setNote, setShowTitle, setDisabled, notes, setNotes}) {
+	let {title, text} = note
+	text = sanitize(text)
 
-        const title = document.getElementById('title').innerHTML
-        let text = document.getElementById('text').innerHTML
-        
-        if (text.length > 0) {
-            text = text.replace(/<div>/gi, '\n');
-            text = text.replace(/<\/div>/gi, '');
-            text = text.replace(/<br>/gi, '');
-        }
+	// state and div innerHTML are no longer linked so need to manually clear each, linking them makes typing the text go the wrong way
+	document.getElementById('title').innerHTML = ''
+	document.getElementById('text').innerHTML = ''
 
-        // clear form and hide title box
-        this.setState({title: '', text: ''}, ()=> this.props.turnOffTitleBox())
-        
-        // state and div innerHTML are no longer linked so need to manually clear each
-        // linking them makes typing the text go the wrong way
-        document.getElementById('title').innerHTML = ''
-        document.getElementById('text').innerHTML = ''
-        
-        // disable button
-        this.setState({disabled: true})
+	// clear state, hide title and disable button
+	setNote({title: '', text: ''})		
+	setDisabled(true)
+	setShowTitle(false)
 
-        // make request
-        mutate(
-            {variables: 
-                { input: 
-                    {
-                        "title": title,
-                        "text": text
-                    } 
-                }
-            }
-        )
-        // close title box
-    }
+	const {data: {newNote}} = await addNoteRequest({title, text})
 
-    // update apollo cache when user adds note to reflect changes immediately on UI
-    update = (cache, result)=> {
-        let {allNotes} = cache.readQuery({query: getAllNotesQuery })
-        cache.writeQuery({
-            query: getAllNotesQuery,
-            data: {allNotes: allNotes.concat([result.data.addNote])}
-        })
-    }
+	// update ui
+	const updatedNotes = [newNote, ...notes] // must create new object(therefore new reference) or else react won't know state has changed and will bail out without rendering children or firing effects, this is because for OBJECTS, react compares references instead of values
+	setNotes(updatedNotes)
+}
 
-    // to prevent line breaks in title box
-    preventLineBreak = (e)=> {
-        // console.log('e', e)
-        // console.log('e.keyCode', e.keyCode)
 
-        // prevent 'enter' key from creating line break in title box
-        if (e.keyCode === 13) {
-            e.preventDefault()
-            // instead have it to go to text box to simulate a tab press
-            document.querySelector('#text').focus()
-        }
-    }
+function TitleInput({note, setNote, setDisabled, showTitle}) {
+	return showTitle ? 
+	<AddNoteInput id='title' name='title' suppressContentEditableWarning={true}
+    contentEditable data-placeholder='Add a title...' 
+    onInput={updateState.bind(this, note, setNote, setDisabled)}
+    onKeyDown={preventLineBreak}/> : null
+}
 
-    createTitleBox = () => {
-        return this.props.displayTitleInputBox ? 
-        <AddNoteInput id='title' name='title' suppressContentEditableWarning={true}
-        contentEditable data-placeholder='Add a title...' 
-        onInput={this.handleChange}
-        onKeyDown={this.preventLineBreak}>
-        {/* should be empty otherwise it reverses the text direction */}
-        </AddNoteInput> : null
-    }
+function TextInput({note, setNote, setDisabled}) {
+	return (
+		<AddNoteInput id='text' name='text' contentEditable
+			suppressContentEditableWarning={true} data-placeholder='Add a note...'
+			onInput={updateState.bind(this, note, setNote, setDisabled)}/>
+	)
+}
 
-    createTextBox = () => {
-        return (
-            <AddNoteInput id='text' name='text' contentEditable
-                suppressContentEditableWarning={true} data-placeholder='Add a note...'
-                onInput={this.handleChange}>{/* should be empty otherwise it reverses text direction */}
-            </AddNoteInput>
-        )
-    }
 
-    render() {
-        return (
-            <Mutation mutation={addNoteMutation}
-                update={this.update}>
-            {
-                (mutate, result) => {
-                    return (
-                        <AddNoteContainer onClick={this.handleClick} autoComplete='off' darkTheme={this.props.darkTheme}>
-                            {this.createTitleBox()}
-                            {this.createTextBox()}
-                            {
-                                this.props.displayTitleInputBox ?
-                                <AddNoteButton type='submit' disabled={this.state.disabled}
-                                onClick={this.handleAddNote.bind(this, mutate)}
-                                darkTheme={this.props.darkTheme}>Add</AddNoteButton> : null
-                            }
-                        </AddNoteContainer>
-                    )
-                }
-            }
-            </Mutation>
-        )
-    }
+
+function sanitize(text) {
+	if (text.length > 0) {
+		text = text.replace(/<div>/gi, '\n');
+		text = text.replace(/<\/div>/gi, '');
+		text = text.replace(/<br>/gi, '\n');
+		text = text.replace(/&nbsp/gi, ' ');
+	}
+	return text
+}
+
+
+function updateState (note, setNote, setDisabled, event) {
+	let titleOrText = event.target.getAttribute('name')
+	const val = event.target.innerHTML
+	note = {...note,  [titleOrText]: val}
+	setNote(note)
+
+	// disable add note button if no text AND no title
+	if (note.title.length === 0 && note.text.length === 0) 
+		setDisabled(true)
+	else setDisabled(false)
+}
+
+function preventLineBreak (e) {
+	// prevent 'enter' key from creating line break in title box
+	if (e.keyCode === 13) {
+		e.preventDefault()
+		// instead go to TextInputBox
+		document.querySelector('#text').focus()
+	}
 }
 
 const AddNoteContainer = styled.div`
     background: ${props => props.darkTheme ? `rgb(40, 40, 40)` : `white`};
-    border: solid 1px;
     border-radius: 5px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px #cccccc;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px ${props => props.darkTheme ? `white` : `black`};
     margin-right:auto;
     margin-left: auto;
     margin-top: 2em;
@@ -146,13 +124,14 @@ const AddNoteContainer = styled.div`
     align-items: center;
     justify-content: space-around;
     /*background:*/
-
+    
     @media only screen and (min-width: 1080px) {
         width:40%;
     }
 `
-
-const AddNoteInput = styled.div`
+    // border: solid 1px;
+// TODO: change this to span to prevent submission of empty notes that have been cleared after typing some characters
+const AddNoteInput = styled.span`
     border:none;
     width:96%;
     border-radius: 10px;
@@ -169,6 +148,7 @@ const AddNoteInput = styled.div`
 `
 
 const AddNoteButton = styled.button`
+    cursor: ${props => props.disabled ? `normal` : `pointer`};
     background: inherit;
     border-radius: 10px;
     border: none;
@@ -179,8 +159,19 @@ const AddNoteButton = styled.button`
     font-size: 16px;
     border: solid 1px transparent;
     align-self: flex-end;
-
-    :hover {
-        border: solid 1px ${props => props.darkTheme ? `white` : `black`};
+    ${
+        // no hover if disabled
+        props => props.disabled ? null :
+        `:hover {
+            border: solid 1px ${props.darkTheme ? `white` : `black`};
+        }`
     }
 `
+
+function areEqual (prevProps, nextProps) {
+	if (prevProps.showTitle !== nextProps.showTitle) return false
+	if (prevProps.darkTheme !== nextProps.darkTheme) return false
+	return true
+}
+
+export default React.memo(NewNote, areEqual)

@@ -8,8 +8,10 @@ export const getAllNotesQuery = gql`
                         text
                         created
                     }
+
                 }
                 `
+
 export const addNoteMutation = gql`
     mutation change($input:NewNote) {
         addNote(input:$input) {
@@ -20,6 +22,7 @@ export const addNoteMutation = gql`
         }
     }
 `
+
 export const editNoteMutation = gql`
     mutation edit($input:EditNote) {
         editNote(input:$input) {

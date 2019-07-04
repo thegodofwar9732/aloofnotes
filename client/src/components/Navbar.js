@@ -1,24 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default class Navbar extends React.Component {
-    
-    toggleDarkTheme = (event) => {
-        event.stopPropagation()
-        this.props.toggleDarkTheme()
-    }
+function Navbar2 (props) {
+	function toggleTheme(e) {
+		props.toggleTheme()
+	}
+	return (
+		<NavDiv>
+			<HomeSpan>Home</HomeSpan>
+			<ToggleThemeButton id='theme' 
+			onClick={toggleTheme} darkTheme={props.darkTheme} 
+			>Toggle Theme</ToggleThemeButton>
+		</NavDiv>
+	)
+}
 
-    render(){
-        return (
-            <NavDiv>
-                <HomeSpan>Home</HomeSpan>
-                <ToggleDarkThemeButton onClick={this.toggleDarkTheme} darkTheme={this.props.darkTheme}>Toggle Theme</ToggleDarkThemeButton>
-            </NavDiv>
-        )
-    }
+function areEqual(prevProps, nextProps) {
+	if (prevProps.darkTheme !== nextProps.darkTheme) return false
+	return true
 }
 
 const NavDiv = styled.div`
+    id: nav;
     background: inherit;
     height: 50px;
     display:flex;
@@ -42,9 +45,13 @@ const HomeSpan = styled.div`
     }
     `
     
-    const ToggleDarkThemeButton = styled.div`
+const ToggleThemeButton = styled.div`
     border: solid 1px ${props => props.darkTheme ? `white` : `black`};
     font-size: 20px;
     border-radius: 10px;
     padding: 0.2em;
+    cursor: pointer;
+    user-select: none;
 `
+
+export default React.memo(Navbar2, areEqual)

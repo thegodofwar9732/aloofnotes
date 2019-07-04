@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import Home from './Home'
+import Home from './components/Home'
 
 export default class Router extends Component {
   render() {
