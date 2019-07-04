@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-// import Home from './components/Home'
 import Home2 from './components/Version 2/Home2'
 
 export default class Router extends Component {

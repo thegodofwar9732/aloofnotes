@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {AddNoteContainer, AddNoteInput, AddNoteButton} from '../NewNote'
+import styled from 'styled-components'
 import {addNoteRequest} from '../../requests'
 
 function NewNote2 (props) {
@@ -110,6 +110,63 @@ function preventLineBreak (e) {
 		document.querySelector('#text').focus()
 	}
 }
+
+const AddNoteContainer = styled.div`
+    background: ${props => props.darkTheme ? `rgb(40, 40, 40)` : `white`};
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px ${props => props.darkTheme ? `white` : `black`};
+    margin-right:auto;
+    margin-left: auto;
+    margin-top: 2em;
+    width:97%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /*background:*/
+    
+    @media only screen and (min-width: 1080px) {
+        width:40%;
+    }
+`
+    // border: solid 1px;
+// TODO: change this to span to prevent submission of empty notes that have been cleared after typing some characters
+const AddNoteInput = styled.span`
+    border:none;
+    width:96%;
+    border-radius: 10px;
+    padding: 1%;
+    margin: 0.5em;
+    font-size: 18px;
+    word-wrap: break-word;
+
+    :empty:before {
+        content:attr(data-placeholder);
+        color: lightgray;
+    }
+    :focus {outline: 0;}
+`
+
+const AddNoteButton = styled.button`
+    cursor: ${props => props.disabled ? `normal` : `pointer`};
+    background: inherit;
+    border-radius: 10px;
+    border: none;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 0.3em;
+    color: inherit;
+    font-size: 16px;
+    border: solid 1px transparent;
+    align-self: flex-end;
+    ${
+        // no hover if disabled
+        props => props.disabled ? null :
+        `:hover {
+            border: solid 1px ${props.darkTheme ? `white` : `black`};
+        }`
+    }
+`
 
 function areEqual (prevProps, nextProps) {
 	if (prevProps.showTitle !== nextProps.showTitle) return false
