@@ -2,10 +2,8 @@ import React, {useState, useEffect, useRef} from 'react'
 import {getAllNotesRequest, editNoteRequest} from '../../requests'
 import styled from 'styled-components'
 import Note2 from './Note2'
-import {placeCaretAtEnd} from '../../helper'
+import {placeCaretAtEnd, findColNum} from '../../helper'
 
-const colNum = window.innerWidth < 400 ? 1 : 4 // is NOT responsive if horizontal viewport is manually changed by the user, TODO: make it responsive
-const columnWidth = Math.floor(100/colNum)
 const requestDelay = 1000
 
 function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...otherProps}) {
@@ -13,6 +11,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 	const [loading, setLoading] = useState(true)
 	const [modal, setModal] = useState({show: false, whereAutofocus: ''})
 	const [modalNote, setModalNote] = useState({title: '', text: ''})
+	const [colNum, setColNum] = useState(findColNum())
 	let childUniqueKey = 0
 	let requestTimer = useRef(null)
 	
@@ -24,8 +23,19 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		})() // IIFE - Immediately Invoked Function Expression
 	}, [])
 
+	// be responsive to changing viewport
+	useEffect(() => {
+		function updateColNums () {
+			setColNum(findColNum())
+		}
+		window.onresize = updateColNums
+		return function cleanup() {
+			window.removeEventListener('resize', updateColNums)
+		}
+	}, [])
+	
 	if (loading) return <div>Loading...</div>
-
+	
 	const openNoteInModal = (e, {id, title, text}) => {
 		const whereAutofocus = e.target.id
 		setModalNote({id, title, text})
@@ -34,7 +44,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		let noteBox = document.getElementById(id)
         noteBox.style.visibility = 'hidden'
 	}
-
+	
 	const saveChanges = ({id, title, text}) => {
 		if (requestTimer.current) {
 			clearTimeout(requestTimer.current)
@@ -43,7 +53,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		}
 		requestTimer.current = setTimeout(editNoteRequest, requestDelay, {id, title, text})
 	}
-
+	
 	const updateUI = (id, title, text) => {
 		notes.some((note, index) => {
 			if (note.id === id) {
@@ -56,13 +66,13 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 			} return false
 		})
 	}
-
+	
 	const numberOfNotes = notes.length
-
+	
 	const columns = []
 	for (let i = 0; i < colNum; i++)
-		columns.push([])
-
+	columns.push([])
+	
 	// distributing notes to different columns
 	for (let i = 0; i < numberOfNotes; i++) {
 		const currentNote = notes[i]
@@ -70,8 +80,9 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		const columnIndex = i % colNum
 		columns[columnIndex].push(noteComponent)
 	}
-
-
+	
+	const columnWidth = Math.floor(100/colNum)
+	
 	return (<>
 		<ColumnGroup>
 			{ columns.map(column => <Column key={childUniqueKey++}  width={columnWidth}>{column}</Column>) }

@@ -15,3 +15,5 @@ export function placeCaretAtEnd(el) {
         textRange.select();
     }
 }
+
+export const findColNum = () => Math.floor(window.innerWidth / 300)
