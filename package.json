@@ -8,7 +8,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build-client": "npm run build --prefix ./client",
+    "update-client": "npm run build-client && npm run deploy-client",
+    "build-client": "rm -rf ../aloofnotes-client/docs &&  npm run build --prefix ./client && mv public ../aloofnotes-client/docs && cd ../aloofnotes-client && bash ./fix.sh",
+    "deploy-client": "cd ../aloofnotes-client && git add . && git commit -m 'update' && git push origin master",
     "dev": "nodemon bundle.js",
     "client": "npm run start --prefix ./client",
     "both": "concurrently \"node server.js\"  \"npm run start --prefix ./client\" ",
