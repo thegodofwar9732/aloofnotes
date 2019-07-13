@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Note from './Note'
 import Modal from './Modal'
 import {findColNum} from '../helper'
+import Loader from 'react-loader-spinner'
 
 const requestDelay = 1000
 
@@ -34,8 +35,12 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 			window.removeEventListener('resize', updateColNums)
 		}
 	}, [])
-	
-	if (loading) return <div>Loading...</div>
+
+	if (loading) return (
+		<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%'}}>
+			<Loader color='#ffffff' type='Oval' height='150' width='150' />
+		</div>
+	)
 	
 	const openNoteInModal = (e, {id, title, text}) => {
 		const whereAutofocus = e.target.id
