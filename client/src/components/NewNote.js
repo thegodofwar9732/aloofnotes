@@ -114,7 +114,7 @@ function preventLineBreak (e) {
 const AddNoteContainer = styled.div`
     background: ${props => props.darkTheme ? `rgb(40, 40, 40)` : `white`};
     border-radius: 5px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px ${props => props.darkTheme ? `white` : `black`};
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px ${props => props.darkTheme ? `white` : `#999999`};
     margin-right:auto;
     margin-left: auto;
     margin-top: 2em;

@@ -24,14 +24,13 @@ const NoteBox = styled.div`
     @media only screen and (min-width: 1080px) {
 		margin: 3%;
 	}
-	border: solid 1px ${props => props.darkTheme ? `#666666` : `#111111`};
+	border: solid 1px ${props => props.darkTheme ? `#666666` : `#999999`};
 	:hover {
 		box-shadow: 0px 1px 4px ${props => props.darkTheme ? `white` : `black`}
 	}
 `
 const NoteTitle = styled.span`
     font-size: 20px;
-    font-weight: bold;
     `
 const NoteText = styled.span`
     margin-top: 1em;
