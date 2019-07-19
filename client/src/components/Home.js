@@ -27,7 +27,7 @@ function hideTitle(setShowTitle, e) {
 	const elementIdsToIgnore = ['theme', 'title', 'text', 'addnote', 'addNoteContainer']
 	if(elementIdsToIgnore.includes(id)) return
 
-	const titleElement = document.getElementById('title')
+	const titleElement = document.getElementById('title') // eslint-disable-next-line
 	const title = titleElement && titleElement.innerHTML || ''
 	const text = document.getElementById('text').innerHTML
 	// don't hide if there is text
