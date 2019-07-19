@@ -142,7 +142,7 @@ const AddNoteInput = styled.span`
 
     :empty:before {
         content:attr(data-placeholder);
-        color: lightgray;
+        color: gray;
     }
     :focus {outline: 0;}
 `
