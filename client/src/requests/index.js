@@ -3,7 +3,7 @@ const defaultOptions = {
 	headers: { 'Content-Type': 'application/json' },
 }
 
-const api = process.env.NODE_ENV === 'production'? '/graphql' : 'http://localhost:5000/graphql'
+const api = process.env.NODE_ENV === 'production'? '/graphql' : `http://${document.location.hostname}:5000/graphql`
 
 export const addNoteRequest = async ({title, text}) => {
 	const options = {
