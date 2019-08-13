@@ -4,15 +4,15 @@ self.__precacheManifest = [
     "url": "/aloofnotes/static/js/runtime~main.da5a721d.js"
   },
   {
-    "revision": "810d3e6d9873245c6345",
-    "url": "/aloofnotes/static/js/main.810d3e6d.chunk.js"
+    "revision": "e8ab3efc45bf77ced29e",
+    "url": "/aloofnotes/static/js/main.e8ab3efc.chunk.js"
   },
   {
     "revision": "267761a024db07d402dc",
     "url": "/aloofnotes/static/js/1.267761a0.chunk.js"
   },
   {
-    "revision": "810d3e6d9873245c6345",
+    "revision": "e8ab3efc45bf77ced29e",
     "url": "/aloofnotes/static/css/main.da9d7658.chunk.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/aloofnotes/static/css/1.552789ce.chunk.css"
   },
   {
-    "revision": "970691ae63e701b8815453136680b208",
+    "revision": "8b70d3f885bfa3b19563d179acfac05e",
     "url": "/aloofnotes/index.html"
   }
 ];
