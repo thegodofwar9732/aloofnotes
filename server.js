@@ -23,20 +23,6 @@ app.get('/drop', (req, res) => {
   noteModel.collection.drop()
   res.send('Note collection has been dropped!<br/><a href="/">Home</a>')
 })
-app.get('/add10', async (req, res) => {
-  let count = 0
-  await noteModel.create({title: 'this is the first note', text: 'this is another note', created: count++})
-  await noteModel.create({title: 'ehy wassup man', text: 'this is another note', created: count++})
-  await noteModel.create({title: 'I am super down for whatever', text: 'this is another note', created: count++})
-  await noteModel.create({title: 'this is the first note', text: 'ALRIGHT!', created: count++})
-  await noteModel.create({title: 'I don\'t wanna fight you', text: 'i wanna kill you', created: count++})
-  await noteModel.create({title: 'jesus', text: 'stop eating the sofa', created: count++})
-  await noteModel.create({title: 'what r u doing in the bedroom', text: 'this is another note', created: count++})
-  await noteModel.create({title: 'this is a note', text: 'pls stop eating the sofa', created: count++})
-  await noteModel.create({title: 'this is a  note', text: 'right paraspinal muscle getting tight', created: count++})
-  await noteModel.create({title: 'this is the first note', text: 'is the tea ready?', created: count++})
-  res.send('Added 10 Notes!<br/><a href="/">Home</a>')
-})
 
 if(process.env.NODE_ENV === 'heroku')
   // must come before catch all or else it won't work
