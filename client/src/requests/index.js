@@ -3,7 +3,10 @@ const defaultOptions = {
 	headers: { 'Content-Type': 'application/json' },
 }
 
-const api = process.env.NODE_ENV === 'production'? '/graphql' : `http://${document.location.hostname}:5000/graphql`
+// const api = process.env.NODE_ENV === 'production'? '/graphql' : `http://${document.location.hostname}:5000/graphql`
+let api = 'https://shielded-crag-97187.herokuapp.com/graphql'
+if (process.env.NODE_ENV === 'heroku') api = '/graphql'
+else if (process.env.NODE_ENV === 'development') api = `http://${document.location.hostname}:5000/graphql`
 
 export const addNoteRequest = async ({title, text}) => {
 	const options = {
