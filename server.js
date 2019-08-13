@@ -38,13 +38,13 @@ app.get('/add10', async (req, res) => {
   res.send('Added 10 Notes!<br/><a href="/">Home</a>')
 })
 
-if(process.env.NODE_ENV === 'production')
+if(process.env.NODE_ENV === 'heroku')
   // must come before catch all or else it won't work
   app.use(express.static('public')) 
 
 // the catch all
 app.get('*', (req, res) => {
-  if(process.env.NODE_ENV === 'production')
+  if(process.env.NODE_ENV === 'heroku')
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
   else res.send('This is the backend server on development')
 })
