@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import {replaceEscapedStringWithHtmlElement} from '../helper'
 
 export default function Note({note: {id, title, text}, openNoteInModal, darkTheme}) {
+	const correctedText = replaceEscapedStringWithHtmlElement(text)
 	
 	return (
 		<NoteBox id={id} darkTheme={darkTheme} onClick={e => openNoteInModal(e, {id, title, text})}>
 			<NoteTitle id='noteTitle'>{title}</NoteTitle>
-			<NoteText id='noteText'>{text}</NoteText>
+			<NoteText id='noteText'>{correctedText}</NoteText>
 		</NoteBox>
 	)
 }

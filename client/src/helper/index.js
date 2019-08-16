@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function placeCaretAtEnd(el) {
     el.focus();
     if (typeof window.getSelection != "undefined"
@@ -17,3 +19,15 @@ export function placeCaretAtEnd(el) {
 }
 
 export const findColNum = () => Math.floor(window.innerWidth / 300)
+
+// paragraph separators such as <br> and <div> in contentEditable html elements are escaped
+// meaning they are intrepreted as strings instead of html elements
+// this function should replace the strings with the html elements so we can display line breaks created by that html
+export function replaceEscapedStringWithHtmlElement(string) {
+    debugger
+	if (string.includes('<div>')) {
+		string = string.replace(/<\/div>/g,'')
+		string = string.replace(/<div>/g,'<br>')
+	}
+	return string.split('<br>').map((s, index) => index !== 0 ? <><br/>{s}</> : s)
+}

@@ -42,7 +42,6 @@ function revealTitle (setShowTitle, e) {
 
 async function handleAddNote ({note, setNote, setShowTitle, setDisabled, notes, setNotes}) {
 	let {title, text} = note
-	text = sanitize(text)
 
 	// state and div innerHTML are no longer linked so need to manually clear each, linking them makes typing the text go the wrong way
 	document.getElementById('title').innerHTML = ''
@@ -76,19 +75,6 @@ function TextInput({note, setNote, setDisabled}) {
 			onInput={updateState.bind(this, note, setNote, setDisabled)}/>
 	)
 }
-
-
-
-function sanitize(text) {
-	if (text.length > 0) {
-		text = text.replace(/<div>/gi, '\n');
-		text = text.replace(/<\/div>/gi, '');
-		text = text.replace(/<br>/gi, '\n');
-		text = text.replace(/&nbsp/gi, ' ');
-	}
-	return text
-}
-
 
 function updateState (note, setNote, setDisabled, event) {
 	let titleOrText = event.target.getAttribute('name')

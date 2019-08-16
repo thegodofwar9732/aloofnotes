@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import styled from 'styled-components'
-import {placeCaretAtEnd} from '../helper'
+import {placeCaretAtEnd, replaceEscapedStringWithHtmlElement} from '../helper'
 
 function Modal({note: {id, title, text}, modal, setModal, saveChanges, updateUI, darkTheme}) {
 	let modified = false
@@ -30,7 +30,9 @@ function Modal({note: {id, title, text}, modal, setModal, saveChanges, updateUI,
 			placeCaretAtEnd(document.getElementById('modalTitle'))
 		if (modal.whereAutofocus === 'noteText')
 			placeCaretAtEnd(document.getElementById('modalText'))
-	})
+    })
+   
+    text = replaceEscapedStringWithHtmlElement(text)
 
 	return modal.show && (
 		<ModalBackground onMouseDown={e=> closeModal(e.target.id)} id='modalBackground'>
