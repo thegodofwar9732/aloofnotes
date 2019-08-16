@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://muhtasim-chowdhury.github.io/aloofnotes",
   "dependencies": {
     "apollo-cache-inmemory": "^1.3.12",
     "apollo-client": "^2.4.8",

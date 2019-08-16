@@ -4,3 +4,9 @@ This is a note taking application inspired by Google Keep. This was bootstrapped
 https://shielded-crag-97187.herokuapp.com/
 
 https://muhtasim-chowdhury.github.io/aloofnotes/
+
+Add
+```
+"homepage": "http://muhtasim-chowdhury.github.io/aloofnotes"
+``` 
+to the package.json in the client folder to deploy to github pages.
