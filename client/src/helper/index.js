@@ -32,8 +32,11 @@ export function replaceEscapedStringWithHtmlElement(string) {
 }
 
 export function sanitize(str) {
-	// remove line feed characters that are inserted by contentEditable span
-	return str.replace(/\n/gi, ' ')
+    // remove line feed characters that are inserted by contentEditable span
+    str = str.replace(/\n/gi, ' ')
+    // escape double quotes by replacing " with \"
+    str = str.replace(/"/gi, '\\"')
+    return str
 }
 
 export function preventLineBreak (e) {
