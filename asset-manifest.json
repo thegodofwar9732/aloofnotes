@@ -1,7 +1,7 @@
 {
   "main.css": "/aloofnotes/static/css/main.5cc6de2f.chunk.css",
-  "main.js": "/aloofnotes/static/js/main.f41b407d.chunk.js",
-  "main.js.map": "/aloofnotes/static/js/main.f41b407d.chunk.js.map",
+  "main.js": "/aloofnotes/static/js/main.4bcf3764.chunk.js",
+  "main.js.map": "/aloofnotes/static/js/main.4bcf3764.chunk.js.map",
   "static/css/1.9db2f515.chunk.css": "/aloofnotes/static/css/1.9db2f515.chunk.css",
   "static/js/1.a2fad75c.chunk.js": "/aloofnotes/static/js/1.a2fad75c.chunk.js",
   "static/js/1.a2fad75c.chunk.js.map": "/aloofnotes/static/js/1.a2fad75c.chunk.js.map",
@@ -10,6 +10,6 @@
   "static/css/main.5cc6de2f.chunk.css.map": "/aloofnotes/static/css/main.5cc6de2f.chunk.css.map",
   "static/css/1.9db2f515.chunk.css.map": "/aloofnotes/static/css/1.9db2f515.chunk.css.map",
   "index.html": "/aloofnotes/index.html",
-  "precache-manifest.65cf2f2947d33951ec7461e107e55e1a.js": "/aloofnotes/precache-manifest.65cf2f2947d33951ec7461e107e55e1a.js",
+  "precache-manifest.bd0518f374915e30c6f9dc0d2b1fdc41.js": "/aloofnotes/precache-manifest.bd0518f374915e30c6f9dc0d2b1fdc41.js",
   "service-worker.js": "/aloofnotes/service-worker.js"
 }
