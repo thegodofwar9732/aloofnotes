@@ -24,10 +24,23 @@ export const findColNum = () => Math.floor(window.innerWidth / 300)
 // meaning they are intrepreted as strings instead of html elements
 // this function should replace the strings with the html elements so we can display line breaks created by that html
 export function replaceEscapedStringWithHtmlElement(string) {
-    debugger
 	if (string.includes('<div>')) {
 		string = string.replace(/<\/div>/g,'')
 		string = string.replace(/<div>/g,'<br>')
 	}
 	return string.split('<br>').map((s, index) => index !== 0 ? <><br/>{s}</> : s)
+}
+
+export function sanitize(str) {
+	// remove line feed characters that are inserted by contentEditable span
+	return str.replace(/\n/gi, ' ')
+}
+
+export function preventLineBreak (e) {
+	// prevent 'enter' key from creating line break in title box
+	if (e.keyCode === 13) {
+		e.preventDefault()
+		// instead go to TextInputBox
+		document.querySelector('#text').focus()
+	}
 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import {addNoteRequest} from '../requests'
+import {sanitize, preventLineBreak} from '../helper'
 
 function NewNote (props) {
 	const [note, setNote] = useState({title: '', text: ''})
@@ -42,6 +43,7 @@ function revealTitle (setShowTitle, e) {
 
 async function handleAddNote ({note, setNote, setShowTitle, setDisabled, notes, setNotes}) {
 	let {title, text} = note
+	text = sanitize(text)
 
 	// state and div innerHTML are no longer linked so need to manually clear each, linking them makes typing the text go the wrong way
 	document.getElementById('title').innerHTML = ''
@@ -59,7 +61,6 @@ async function handleAddNote ({note, setNote, setShowTitle, setDisabled, notes, 
 	setNotes(updatedNotes)
 }
 
-
 function TitleInput({note, setNote, setDisabled, showTitle}) {
 	return showTitle ? 
 	<AddNoteInput id='title' name='title' suppressContentEditableWarning={true}
@@ -69,10 +70,17 @@ function TitleInput({note, setNote, setDisabled, showTitle}) {
 }
 
 function TextInput({note, setNote, setDisabled}) {
+
+	function keepPlainTextOnly(e) {
+		e.preventDefault();
+		var text = e.clipboardData.getData("text/plain");
+		document.execCommand("insertHTML", false, text);
+	}
+
 	return (
 		<AddNoteInput id='text' name='text' contentEditable
 			suppressContentEditableWarning={true} data-placeholder='Add a note...'
-			onInput={updateState.bind(this, note, setNote, setDisabled)}/>
+			onInput={updateState.bind(this, note, setNote, setDisabled)} onPaste={keepPlainTextOnly} />
 	)
 }
 
@@ -86,15 +94,6 @@ function updateState (note, setNote, setDisabled, event) {
 	if (note.title.length === 0 && note.text.length === 0) 
 		setDisabled(true)
 	else setDisabled(false)
-}
-
-function preventLineBreak (e) {
-	// prevent 'enter' key from creating line break in title box
-	if (e.keyCode === 13) {
-		e.preventDefault()
-		// instead go to TextInputBox
-		document.querySelector('#text').focus()
-	}
 }
 
 const AddNoteContainer = styled.div`
