@@ -8,7 +8,7 @@ import Loader from 'react-loader-spinner'
 
 const requestDelay = 1000
 
-function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...otherProps}) {
+function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, darkTheme}) {
 	// TODO: add error state
 	const [loading, setLoading] = useState(true)
 	const [modal, setModal] = useState({show: false, whereAutofocus: ''})
@@ -38,7 +38,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 
 	if (loading) return (
 		<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80%'}}>
-			<Loader color='#ffffff' type='Oval' height='150' width='150' />
+			<Loader color={darkTheme ? '#ffffff' : '#000000'} type='Oval' height='150' width='150' />
 		</div>
 	)
 	
@@ -82,7 +82,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 	// distributing notes to different columns
 	for (let i = 0; i < numberOfNotes; i++) {
 		const currentNote = notes[i]
-		const noteComponent = <Note openNoteInModal={openNoteInModal} key={currentNote.id} note={currentNote} {...otherProps} />
+		const noteComponent = <Note openNoteInModal={openNoteInModal} key={currentNote.id} note={currentNote} darkTheme={darkTheme} />
 		const columnIndex = i % colNum
 		columns[columnIndex].push(noteComponent)
 	}
@@ -93,7 +93,7 @@ function NotesContainer2({notes, setNotes, notesVersion, setNotesVersion, ...oth
 		<ColumnGroup>
 			{ columns.map(column => <Column key={childUniqueKey++}  width={columnWidth}>{column}</Column>) }
 		</ColumnGroup>
-		<Modal modal={modal} setModal={setModal} note={modalNote} saveChanges={saveChanges} updateUI={updateUI}  {...otherProps}/>
+		<Modal modal={modal} setModal={setModal} note={modalNote} saveChanges={saveChanges} updateUI={updateUI} darkTheme={darkTheme}/>
 	</>)
 }
 

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 function Home2 () {
 	const [showTitle, setShowTitle] = useState(false)
-	const [darkTheme, toggleTheme] = useDarkTheme(true)
+	const [darkTheme, toggleTheme] = useDarkTheme(false)
 	const [notes, setNotes] = useState([])
 	const [notesVersion, setNotesVersion] = useState(0) // state to keep track of notes 'versions', everytime a note is modified, notes is updatd and this variable is incremented notify NotesContainer to update
 	return (
