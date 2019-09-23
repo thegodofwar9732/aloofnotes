@@ -13,6 +13,7 @@ const schema = gql`
   type Mutation {
     addNote(input: NewNote): Note
     editNote(input: EditNote): Note
+    drop: String
   }
   input NewNote {
     title: String

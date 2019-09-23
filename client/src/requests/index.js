@@ -40,3 +40,15 @@ export const editNoteRequest = async ({id, title, text}) => {
 const editNoteMutation = ({id, title, text}) => {
 	return `{"variables": {"input": {"id": "${id}", "title": "${title}", "text": "${text}"}},"query":"mutation edit($input: EditNote){ editNote(input: $input) {id title text } }"}`
 }
+
+export const dropCollectionRequest = async () => {
+	console.log('dropcollectionrequeset')
+	const options = {
+		...defaultOptions,
+		body: dropCollectionMutation()
+	}
+	return fetch(api, options).then(res => res.json())
+}
+const dropCollectionMutation = () => {
+	return `{"query":"mutation dropCollection { drop }"}`
+}
