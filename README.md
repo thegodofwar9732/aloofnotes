@@ -3,7 +3,7 @@ This is a note taking application inspired by Google Keep. This was bootstrapped
 
 https://shielded-crag-97187.herokuapp.com/
 
-https://muhtasim-chowdhury.github.io/aloofnotes/
+https://muhtasimchowdhury.engineer/aloofnotes/
 
 Add
 ```
